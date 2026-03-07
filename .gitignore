@@ -1,0 +1,22 @@
+# Dev tools
+node_modules/
+react-app/
+temporary screenshots/
+serve.mjs
+screenshot.mjs
+package.json
+package-lock.json
+
+# Reference files
+www.johnnysdirtysoda.com_.png
+docs/
+בדיקה/
+CLAUDE.md
+CLAUDE (2).md
+
+# Old profile pic with space
+profile pic.jpg
+
+# OS
+.DS_Store
+Thumbs.db

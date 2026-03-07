@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Poodle Club by Orel Levi — אימון פודלים מקצועי לכל הסוגים והגדלים">
+  <title>Poodle Club by Orel Levi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    /* ─── Variables ──────────────────────────────────────────── */
+    :root {
+      --cream:      #FFF8F0;
+      --cream-2:    #FFF2E4;
+      --sand:       #F5E4CC;
+      --sand-2:     #EDD5B0;
+      --rose:       #F2A7B0;
+      --rose-lt:    #FCDDE0;
+      --rose-dk:    #E07888;
+      --coral:      #FF5A5F;
+      --coral-dk:   #E03D42;
+      --plum:       #3D1A4A;
+      --plum-dk:    #280D33;
+      --plum-lt:    #5A2870;
+      --mint:       #8FE8C4;
+      --mint-lt:    #C5F5E2;
+      --lavender:   #E0D0F5;
+      --text-dark:  #1A0A24;
+      --text-mid:   rgba(26,10,36,0.65);
+      --text-soft:  rgba(26,10,36,0.4);
+      --white:      #FFFFFF;
+
+      --font-display: 'Bebas Neue', Georgia, sans-serif;
+      --font: 'Heebo', sans-serif;
+      --wrap: min(1200px, 92vw);
+      --pad: clamp(72px, 9vw, 120px);
+      --r: 20px;
+      --r-sm: 12px;
+      --r-pill: 100px;
+      --t: .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --t-spring: .45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      --t-f: .18s ease;
+
+      --sh-card: 0 8px 40px rgba(61,26,74,0.12), 0 2px 8px rgba(61,26,74,0.08);
+      --sh-float: 0 24px 60px rgba(61,26,74,0.18), 0 8px 24px rgba(61,26,74,0.12);
+      --sh-coral: 0 8px 32px rgba(255,90,95,0.4);
+      --sh-coral-lg: 0 16px 56px rgba(255,90,95,0.5);
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { direction: rtl; scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); background: var(--cream); color: var(--text-dark); text-align: right; overflow-x: hidden; line-height: 1.6; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font); }
+    section[id] { scroll-margin-top: 80px; }
+
+    /* ─── Wave Dividers ──────────────────────────────────────── */
+    .wave {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .wave svg {
+      display: block;
+      width: 100%;
+      height: 60px;
+    }
+    @media (max-width: 768px) {
+      .wave svg { height: 36px; }
+    }
+
+    /* ─── Marquee Ticker ─────────────────────────────────────── */
+    .ticker {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 16px 0;
+    }
+    .ticker--mint  { background: var(--mint); }
+    .ticker--coral { background: var(--coral); }
+    .ticker--rose  { background: var(--rose); }
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      animation: tickerScroll 22s linear infinite;
+      will-change: transform;
+    }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0 40px;
+      font-size: .9rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--plum);
+      white-space: nowrap;
+    }
+    .ticker--coral .ticker-item { color: var(--white); }
+    .ticker-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── Stripe Bar ─────────────────────────────────────────── */
+    .stripe-bar {
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--mint) 0px, var(--mint) 24px,
+        transparent 24px, transparent 48px
+      );
+      opacity: 0.7;
+    }
+
+    /* ─── Buttons ────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      gap: 8px;
+      padding: 16px 40px;
+      border-radius: var(--r-pill);
+      font-size: 1.05rem; font-weight: 700;
+      font-family: var(--font);
+      transition: transform var(--t-spring), box-shadow var(--t), background var(--t-f);
+      will-change: transform;
+      border: none; cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+    .btn-coral {
+      background: var(--coral);
+      color: var(--white);
+      box-shadow: var(--sh-coral);
+    }
+    .btn-coral:hover {
+      background: var(--coral-dk);
+      box-shadow: var(--sh-coral-lg);
+      transform: translateY(-3px) scale(1.02);
+    }
+    .btn-coral:active { transform: translateY(0) scale(1); }
+    .btn-out {
+      background: rgba(255,255,255,0.15);
+      color: var(--text-dark);
+      border: 2px solid rgba(26,10,36,0.2);
+    }
+    .btn-out:hover {
+      border-color: var(--coral);
+      color: var(--coral);
+      background: rgba(255,90,95,0.06);
+    }
+    .btn-out-white {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .btn-out-white:hover {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* ─── Scroll Reveal ──────────────────────────────────────── */
+    .rv {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+    .rv.on { opacity: 1; transform: none; }
+    .rv-left {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+    .rv-left.on { opacity: 1; transform: none; }
+    .rv-right {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+    .rv-right.on { opacity: 1; transform: none; }
+
+    /* ─── Section Headings ───────────────────────────────────── */
+    .s-eyebrow {
+      display: inline-block;
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: var(--r-pill);
+      margin-bottom: 16px;
+      font-family: var(--font);
+    }
+    .s-eyebrow--coral { color: var(--coral); background: rgba(255,90,95,0.1); border: 1px solid rgba(255,90,95,0.25); }
+    .s-eyebrow--plum { color: var(--plum); background: rgba(61,26,74,0.08); border: 1px solid rgba(61,26,74,0.2); }
+    .s-eyebrow--white { color: var(--mint); background: rgba(143,232,196,0.12); border: 1px solid rgba(143,232,196,0.3); }
+
+    .s-title {
+      font-family: var(--font);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--plum);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .s-title--white { color: var(--white); }
+    .s-title--coral { color: var(--coral); }
+
+    .s-accent-line {
+      width: 60px; height: 4px;
+      background: var(--coral);
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+    .s-accent-line--center { margin-left: auto; margin-right: auto; }
+    .s-accent-line--mint { background: var(--mint); }
+
+    .s-sub {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      font-weight: 400;
+      margin-top: 14px;
+      line-height: 1.72;
+    }
+    .s-sub--white { color: rgba(255,255,255,0.65); }
+    .s-head { margin-bottom: 56px; }
+
+    /* ─── Sticky Nav ─────────────────────────────────────────── */
+    #nav {
+      position: fixed; inset-inline: 0; top: 0;
+      z-index: 100;
+      background: rgba(255,248,240,0.9);
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
+      padding: 14px 0;
+      transform: translateY(-100%);
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      border-bottom: 1px solid rgba(61,26,74,0.1);
+      box-shadow: 0 4px 24px rgba(61,26,74,0.08);
+    }
+    #nav.on { transform: none; }
+    .nav-in {
+      max-width: var(--wrap); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--plum);
+      letter-spacing: .04em;
+    }
+    .nav-logo em { color: var(--coral); font-style: normal; }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      background: #0a0a0a;
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+
+    #hero-grad-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+
+    .hero-in {
+      position: relative; z-index: 2;
+      max-width: 800px; margin: 0 auto;
+      padding: 100px 24px 140px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      padding: 7px 18px;
+      border-radius: var(--r-pill);
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); animation: tagPulse 2s ease infinite; }
+    @keyframes tagPulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.7); } }
+
+    .hero-brand {
+      font-family: var(--font-display);
+      font-size: clamp(5.5rem, 12vw, 11rem);
+      line-height: 0.85;
+      letter-spacing: .02em;
+      color: #ffffff;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .hero-by {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: .1em;
+      color: var(--coral);
+      display: block;
+      margin-bottom: 32px;
+    }
+    .hero-p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 400;
+      margin-bottom: 40px;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    .hero-badges {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 40px; justify-content: center;
+    }
+    .hero-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .8rem; font-weight: 500; color: rgba(255,255,255,0.8);
+    }
+    .hero-badge-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+    }
+
+    .hero-poodle {
+      font-size: 7rem;
+      display: block;
+      margin-bottom: 20px;
+      animation: poodleFloat 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 28px rgba(255,128,171,0.7)) drop-shadow(0 0 60px rgba(41,121,255,0.4));
+      line-height: 1;
+    }
+    @keyframes poodleFloat {
+      0%,100% { transform: translateY(0) rotate(-4deg); }
+      50%      { transform: translateY(-18px) rotate(4deg); }
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.4); font-size: .72rem; letter-spacing: .1em;
+      animation: bounce 2.2s ease-in-out infinite;
+      z-index: 2;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(9px);} }
+
+    /* ─── BREEDS ─────────────────────────────────────────────── */
+    #breeds { background: var(--sand); padding: var(--pad) 24px 60px; position: relative; }
+    .breeds-in { max-width: var(--wrap); margin: 0 auto; }
+
+    .breed-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .breed-card {
+      position: relative;
+      background: var(--white);
+      border-radius: var(--r);
+      padding: 0 0 28px;
+      box-shadow: var(--sh-card);
+      transition: transform var(--t-spring), box-shadow var(--t);
+      will-change: transform; cursor: default;
+      overflow: visible;
+    }
+    .breed-card:hover {
+      transform: translateY(-14px);
+      box-shadow: var(--sh-float);
+    }
+
+    .breed-card-img-wrap {
+      position: absolute;
+      left: 50%; top: 0;
+      transform: translate(-50%, -65%);
+      width: 180px; height: 220px;
+      transition: transform var(--t-spring);
+      z-index: 2;
+    }
+    .breed-card:hover .breed-card-img-wrap {
+      transform: translate(-50%, -72%) scale(1.06);
+    }
+    .breed-card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 28px rgba(61,26,74,0.25));
+    }
+
+    .breed-card-color {
+      height: 110px;
+      border-radius: var(--r) var(--r) 0 0;
+    }
+    .bc-rose    { background: linear-gradient(135deg, #FCDDE0 0%, #F5B8C2 100%); }
+    .bc-mint    { background: linear-gradient(135deg, #C5F5E2 0%, #8FEAD0 100%); }
+    .bc-lavender{ background: linear-gradient(135deg, #EAD8F8 0%, #CDB8EE 100%); }
+    .bc-sand    { background: linear-gradient(135deg, #FDEBD0 0%, #F0D09A 100%); }
+
+    .breed-card-body {
+      padding: 16px 20px 0;
+      text-align: center;
+    }
+    .breed-card-body h3 {
+      font-size: 1.05rem; font-weight: 900; color: var(--plum);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .breed-card-body p { font-size: .82rem; color: var(--text-mid); line-height: 1.5; }
+
+    /* ─── WHY POODLES ────────────────────────────────────────── */
+    #why { background: var(--plum); padding: var(--pad) 24px; position: relative; overflow: hidden; }
+    #why::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 10% 30%, rgba(143,232,196,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 70%, rgba(255,90,95,0.1) 0%, transparent 50%);
+    }
+    .why-in { max-width: var(--wrap); margin: 0 auto; position: relative; z-index: 1; }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    .why-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--r); padding: 36px 28px;
+      position: relative; overflow: hidden;
+      transition: transform var(--t-spring), border-color var(--t), background var(--t);
+      will-change: transform;
+    }
+    .why-card::before {
+      content: '';
+      position: absolute; top: 0; inset-inline: 0; height: 3px;
+      background: var(--coral);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform var(--t);
+    }
+    .why-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .why-card:hover::before { transform: scaleX(1); }
+
+    .wi {
+      width: 52px; height: 52px;
+      background: rgba(255,90,95,0.15);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,90,95,0.2);
+    }
+    .wi svg { width: 24px; height: 24px; }
+    .why-card h3 { font-size: 1.08rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .why-card p { font-size: .9rem; color: rgba(255,255,255,0.6); line-height: 1.68; }
+
+    /* ─── HOW IT WORKS ───────────────────────────────────────── */
+    #how { background: var(--cream); padding: var(--pad) 24px; position: relative; overflow: hidden; }
+    #how::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(61,26,74,0.05) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+    }
+    .how-in { max-width: var(--wrap); margin: 0 auto; position: relative; z-index: 1; }
+    .how-steps { display: flex; align-items: stretch; gap: 0; margin-top: 56px; }
+    .how-step {
+      flex: 1;
+      background: var(--white);
+      border-radius: var(--r); padding: 44px 32px;
+      box-shadow: var(--sh-card);
+      transition: transform var(--t-spring), box-shadow var(--t);
+      border: 1.5px solid rgba(61,26,74,0.06);
+    }
+    .how-step:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--sh-float);
+    }
+    .how-num {
+      font-family: var(--font-display);
+      font-size: 5.5rem; font-weight: 400;
+      color: rgba(61,26,74,0.08);
+      line-height: 1; margin-bottom: 12px; letter-spacing: -.02em;
+    }
+    .how-icon {
+      width: 58px; height: 58px;
+      background: var(--coral);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; box-shadow: 0 4px 16px rgba(255,90,95,.35);
+    }
+    .how-icon svg { width: 26px; height: 26px; color: white; }
+    .how-step h3 { font-size: 1.3rem; font-weight: 900; color: var(--plum); margin-bottom: 12px; letter-spacing: -0.01em; }
+    .how-step p { font-size: .95rem; color: var(--text-mid); line-height: 1.7; }
+    .how-arr { flex: 0 0 56px; display: flex; align-items: center; justify-content: center; color: var(--rose-dk); transform: scaleX(-1); }
+    .how-arr svg { width: 32px; height: 32px; opacity: 0.5; }
+
+    /* ─── BENEFITS ───────────────────────────────────────────── */
+    #benefits { background: var(--sand); padding: var(--pad) 24px; position: relative; }
+    .ben-in { max-width: var(--wrap); margin: 0 auto; }
+    .ben-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .ben-card {
+      background: var(--white);
+      border-radius: var(--r); padding: 32px 28px;
+      box-shadow: var(--sh-card);
+      border: 1.5px solid rgba(61,26,74,0.06);
+      transition: transform var(--t-spring), box-shadow var(--t);
+      will-change: transform;
+    }
+    .ben-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--sh-float);
+      border-color: rgba(255,90,95,0.2);
+    }
+    .bi {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(255,90,95,0.12), rgba(61,26,74,0.08));
+      border: 1px solid rgba(255,90,95,0.15);
+    }
+    .bi svg { width: 22px; height: 22px; color: var(--coral); }
+    .ben-card h3 { font-size: 1rem; font-weight: 700; color: var(--plum); margin-bottom: 8px; }
+    .ben-card p { font-size: .88rem; color: var(--text-mid); line-height: 1.65; }
+
+    /* ─── TRACKS ─────────────────────────────────────────────── */
+    #tracks { padding: var(--pad) 24px; background: var(--plum); position: relative; overflow: hidden; }
+    #tracks::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(143,232,196,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(255,90,95,0.08) 0%, transparent 50%);
+    }
+    .tracks-in { max-width: var(--wrap); margin: 0 auto; position: relative; z-index: 1; }
+    .tr-toggle {
+      display: inline-flex;
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--r-pill); padding: 5px;
+      margin: 44px 0 36px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .tr-btn {
+      padding: 12px 36px; border-radius: var(--r-pill);
+      font-size: .98rem; font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      transition: var(--t-f); font-family: var(--font);
+    }
+    .tr-btn.on {
+      background: var(--coral);
+      color: var(--white);
+      box-shadow: var(--sh-coral);
+    }
+    .tr-panel { display: none; }
+    .tr-panel.on { display: block; animation: fadeUp .3s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .tr-body { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .tr-list { list-style: none; }
+    .tr-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: .97rem; color: rgba(255,255,255,0.7); line-height: 1.5;
+    }
+    .tr-list li:last-child { border-bottom: none; }
+    .tr-chk {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,90,95,0.2);
+      border: 1.5px solid rgba(255,90,95,0.4);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .tr-chk svg { width: 11px; height: 11px; color: var(--coral); }
+    .tr-box {
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--r);
+      padding: 40px 36px;
+      border: 1px solid rgba(255,255,255,0.12);
+      position: relative; overflow: hidden;
+    }
+    .tr-box::before {
+      content: ''; position: absolute; top: 0; inset-inline: 0; height: 3px;
+      background: var(--coral);
+    }
+    .tr-box h3 { font-size: 1.35rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .tr-box > p { font-size: .93rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 16px; }
+    .tr-note {
+      font-size: .88rem; color: rgba(255,255,255,0.6); line-height: 1.65;
+      padding: 14px 16px; background: rgba(255,90,95,0.1);
+      border-radius: var(--r-sm); border-inline-start: 3px solid var(--coral);
+      margin: 18px 0 26px;
+    }
+
+    /* ─── GALLERY ────────────────────────────────────────────── */
+    /* ─── TRAINER ────────────────────────────────────────────── */
+    #trainer { padding: var(--pad) 24px; background: var(--sand); position: relative; }
+    .tr-in {
+      max-width: var(--wrap); margin: 0 auto;
+      display: grid; grid-template-columns: 360px 1fr;
+      gap: 72px; align-items: center;
+    }
+    .tr-img-wrap {
+      position: relative;
+      width: min(340px, 88vw);
+      aspect-ratio: 1/1;
+      flex-shrink: 0;
+    }
+    .tr-img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 8px 40px rgba(61,26,74,0.22), 0 0 0 6px rgba(242,167,176,0.35), 0 0 0 12px rgba(242,167,176,0.12);
+      transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+    }
+    .tr-img-wrap:hover .tr-img {
+      transform: scale(1.03);
+      box-shadow: 0 14px 50px rgba(61,26,74,0.28), 0 0 0 6px rgba(242,167,176,0.45), 0 0 0 14px rgba(242,167,176,0.15);
+    }
+    .tr-badge {
+      position: absolute; bottom: 18px; right: 18px;
+      background: var(--coral);
+      color: var(--white);
+      font-size: .78rem; font-weight: 700;
+      padding: 7px 16px; border-radius: var(--r-pill);
+      box-shadow: var(--sh-coral);
+    }
+    .tr-bio { font-size: .97rem; color: var(--text-mid); line-height: 1.85; margin: 22px 0 30px; }
+    .tr-creds { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .tr-creds li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: .93rem; font-weight: 500; color: var(--text-mid);
+    }
+    .tr-creds li::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--coral); flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(255,90,95,0.5);
+    }
+
+    /* ─── FAQ ────────────────────────────────────────────────── */
+    #faq { padding: var(--pad) 24px; background: var(--cream); position: relative; }
+    .faq-in { max-width: 780px; margin: 0 auto; }
+    .faq-in .s-head { text-align: center; }
+    .faq-item { border-bottom: 1.5px solid rgba(61,26,74,0.08); }
+    .faq-q {
+      width: 100%; text-align: right; padding: 22px 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      font-size: 1rem; font-weight: 700; color: var(--plum);
+      cursor: pointer; font-family: var(--font); background: none; border: none;
+      transition: color var(--t-f);
+    }
+    .faq-q:hover { color: var(--coral); }
+    .faq-ico {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid rgba(61,26,74,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: var(--t); color: var(--coral);
+    }
+    .faq-item.open .faq-ico {
+      background: var(--coral); color: var(--white);
+      border-color: var(--coral); transform: rotate(45deg);
+      box-shadow: var(--sh-coral);
+    }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-a-in {
+      padding-bottom: 20px;
+      font-size: .95rem; color: var(--text-mid); line-height: 1.78;
+      border-inline-start: 3px solid rgba(255,90,95,0.3);
+      padding-inline-start: 16px;
+      margin-inline-start: 4px;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────────── */
+    #contact { padding: var(--pad) 24px; background: var(--plum); position: relative; overflow: hidden; }
+    #contact::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(255,90,95,.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(143,232,196,.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .con-in { max-width: 580px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+    #contact-form { margin-top: 44px; display: flex; flex-direction: column; gap: 14px; }
+    .f-field input, .f-field select {
+      width: 100%; padding: 17px 20px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      color: var(--white); font-size: 1rem; font-family: var(--font);
+      text-align: right; direction: rtl; outline: none;
+      transition: border-color var(--t-f), background var(--t-f), box-shadow var(--t-f);
+      -webkit-appearance: none;
+    }
+    .f-field input[name="phone"] { direction: ltr; text-align: right; }
+    .f-field input::placeholder { color: rgba(255,255,255,.38); }
+    .f-field select option { background: var(--plum-dk); color: var(--white); }
+    .f-field input:focus, .f-field select:focus {
+      border-color: var(--coral);
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 0 0 3px rgba(255,90,95,0.2), var(--sh-coral);
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: var(--sh-coral); }
+      50%       { box-shadow: 0 12px 48px rgba(255,90,95,0.75); }
+    }
+    .f-submit {
+      padding: 17px 36px;
+      background: var(--coral);
+      color: var(--white);
+      border-radius: var(--r-pill); font-size: 1.08rem; font-weight: 700;
+      font-family: var(--font); cursor: pointer; border: none;
+      box-shadow: var(--sh-coral);
+      transition: transform var(--t-spring), box-shadow var(--t), background var(--t-f);
+      margin-top: 6px;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    .f-submit:hover {
+      background: var(--coral-dk);
+      box-shadow: var(--sh-coral-lg);
+      transform: translateY(-3px);
+      animation: none;
+    }
+    .f-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; animation: none; }
+    .f-success {
+      padding: 48px 36px; background: rgba(255,255,255,.08);
+      border-radius: var(--r); border: 1px solid rgba(255,255,255,.14);
+    }
+    .f-success h3 { font-size: 1.55rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .f-success p { color: rgba(255,255,255,.65); font-size: .98rem; }
+    .f-err { color: #FFB0B3; font-size: .88rem; text-align: right; margin-top: 6px; }
+
+    /* ─── POPUPS ─────────────────────────────────────────────── */
+    .popup {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    .popup.on { opacity: 1; visibility: visible; }
+    .p-ov {
+      position: absolute; inset: 0;
+      background: rgba(26,10,36,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .p-box {
+      position: relative; z-index: 1;
+      background: var(--white);
+      border: 1.5px solid rgba(61,26,74,0.1);
+      border-radius: 24px; padding: 48px 40px;
+      max-width: 460px; width: 100%;
+      box-shadow: var(--sh-float);
+      transform: translateY(14px) scale(0.98);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .popup.on .p-box { transform: none; }
+    .p-close {
+      position: absolute; top: 14px; left: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(61,26,74,0.06);
+      color: var(--text-soft);
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: 1px solid rgba(61,26,74,0.1);
+      font-family: var(--font); transition: var(--t-f);
+    }
+    .p-close:hover { background: var(--coral); color: var(--white); border-color: var(--coral); }
+    .p-paw { font-size: 2.4rem; margin-bottom: 14px; }
+    .p-box h3 { font-size: 1.45rem; font-weight: 900; color: var(--plum); margin-bottom: 10px; }
+    .p-box p { font-size: .95rem; color: var(--text-mid); line-height: 1.68; margin-bottom: 26px; }
+    .p-cta {
+      width: 100%; padding: 15px;
+      background: var(--coral);
+      color: var(--white);
+      border-radius: var(--r-pill); font-size: .98rem; font-weight: 700;
+      font-family: var(--font); cursor: pointer; border: none;
+      box-shadow: var(--sh-coral); transition: transform var(--t-spring), box-shadow var(--t);
+    }
+    .p-cta:hover { transform: translateY(-2px); box-shadow: var(--sh-coral-lg); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      padding: 32px 24px;
+      background: var(--plum-dk);
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: .82rem;
+      font-family: var(--font);
+    }
+    footer .f-logo { color: var(--coral); font-weight: 700; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .05em; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-in { grid-template-columns: 1fr; padding-top: 100px; gap: 40px; }
+      .breed-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .tr-in { grid-template-columns: 1fr; }
+      .tr-img-ph { max-width: 300px; margin: 0 auto; }
+      .tr-body { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn { width: 100%; text-align: center; }
+      .how-steps { flex-direction: column; gap: 16px; }
+      .how-arr { transform: rotate(90deg) scaleX(-1); flex: 0 0 48px; }
+      .ben-grid { grid-template-columns: 1fr; }
+      .gal-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+      .gi--wide { grid-column: span 2; }
+      .gi--tall { grid-row: span 1; }
+      .why-grid { grid-template-columns: 1fr; }
+      .p-box { padding: 36px 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-brand { font-size: 4.5rem; }
+      .hero-by { font-size: 2rem; }
+      .breed-grid { grid-template-columns: repeat(2, 1fr); }
+      .gal-grid { gap: 10px; grid-auto-rows: 170px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Sticky Nav ───────────────────────────────────────────────────── -->
+<nav id="nav" aria-label="ניווט ראשי">
+  <div class="nav-in">
+    <div class="nav-logo">POODLE CLUB <em>by Orel Levi</em></div>
+    <a href="#contact" class="btn btn-coral" style="padding:10px 24px;font-size:.88rem;">להצטרפות</a>
+  </div>
+</nav>
+
+<!-- ─── Hero ─────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div id="hero-grad-bg"></div>
+  <div class="hero-in">
+    <span class="hero-poodle rv">🐩</span>
+    <div class="hero-content rv" style="transition-delay:.1s">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        אימון פודלים מקצועי
+      </div>
+      <span class="hero-brand">POODLE<br>CLUB</span>
+      <span class="hero-by">BY OREL LEVI</span>
+      <p class="hero-p">אימון מקצועי לפודלים מכל הסוגים והגדלים - גישה ייחודית שמותאמת לגזע החכם ביותר</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-coral">אני רוצה להצטרף</a>
+        <a href="#how" class="btn btn-out-white">איך זה עובד?</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge"><div class="hero-badge-icon">🐩</div>כל גדלי הפודל</div>
+        <div class="hero-badge"><div class="hero-badge-icon">⭐</div>8 שנות ניסיון</div>
+        <div class="hero-badge"><div class="hero-badge-icon">🎓</div>מאמן מוסמך</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    גלול מטה
+  </div>
+</section>
+
+<!-- ─── Wave: Hero → Breeds ───────────────────────────────────────────── -->
+<div class="wave" style="background:var(--cream)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#F5E4CC"/>
+  </svg>
+</div>
+
+<!-- ─── Breed Cards ───────────────────────────────────────────────────── -->
+<section id="breeds">
+  <div class="breeds-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--plum">הגזעים שלנו</div>
+      <h2 class="s-title">הגזעים שאנחנו מאמנים</h2>
+      <div class="s-accent-line"></div>
+      <p class="s-sub">כל סוגי הפודל ומשפחת ה-Doodle - אנחנו מכירים את כל אחד מהם</p>
+    </div>
+    <div class="breed-grid">
+      <div class="breed-card rv" style="margin-top:130px">
+        <div class="breed-card-img-wrap">
+          <img src="תמונות/פודלים לדף נחיתה/34.png" alt="פודל סטנדרט" loading="eager" decoding="async">
+        </div>
+        <div class="breed-card-color bc-rose"></div>
+        <div class="breed-card-body">
+          <h3>פודל סטנדרט</h3>
+          <p>המלך של הגזע - גדול, מפואר ואינטליגנטי</p>
+        </div>
+      </div>
+      <div class="breed-card rv" style="margin-top:130px;transition-delay:.1s">
+        <div class="breed-card-img-wrap">
+          <img src="תמונות/פודלים לדף נחיתה/20.png" alt="פודל מיני" loading="eager" decoding="async">
+        </div>
+        <div class="breed-card-color bc-mint"></div>
+        <div class="breed-card-body">
+          <h3>פודל מיני</h3>
+          <p>הגודל האידיאלי - כל הכישרון, פחות מקום</p>
+        </div>
+      </div>
+      <div class="breed-card rv" style="margin-top:130px;transition-delay:.2s">
+        <div class="breed-card-img-wrap">
+          <img src="תמונות/פודלים לדף נחיתה/31.png" alt="פודל טוי" loading="eager" decoding="async">
+        </div>
+        <div class="breed-card-color bc-lavender"></div>
+        <div class="breed-card-body">
+          <h3>פודל טוי</h3>
+          <p>קטן, חד ומסור - עם אופי ענק</p>
+        </div>
+      </div>
+      <div class="breed-card rv" style="margin-top:130px;transition-delay:.3s">
+        <div class="breed-card-img-wrap">
+          <img src="תמונות/פודלים לדף נחיתה/26.png" alt="שיהפו ומלטיפו" loading="eager" decoding="async">
+        </div>
+        <div class="breed-card-color bc-sand"></div>
+        <div class="breed-card-body">
+          <h3>שיהפו ומלטיפו</h3>
+          <p>תמהיל פודל - כל הקסם של הגזע בגוף קטן</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Marquee: Breeds → Why ─────────────────────────────────────────── -->
+<div class="ticker ticker--mint">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>🐩 פודל קלאב</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>אימון מקצועי לכל הגדלים</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🐾 פודל סטנדרט · מיני · טוי</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>שיחת התאמה חינמית</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>✓ 8 שנות ניסיון</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🐩 פודל קלאב</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>אימון מקצועי לכל הגדלים</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🐾 פודל סטנדרט · מיני · טוי</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>שיחת התאמה חינמית</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>✓ 8 שנות ניסיון</span>
+  </div>
+</div>
+<!-- ─── Wave: Breeds → Why ────────────────────────────────────────────── -->
+<div class="wave" style="background:var(--sand)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#3D1A4A"/>
+  </svg>
+</div>
+
+<!-- ─── Why Poodles ───────────────────────────────────────────────────── -->
+<section id="why">
+  <div class="why-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--white">למה אנחנו</div>
+      <h2 class="s-title s-title--white">למה פודלים זה סיפור אחר</h2>
+      <div class="s-accent-line s-accent-line--mint"></div>
+      <p class="s-sub s-sub--white">הגזע החכם, הנקי והמסור - עם גישת אימון שמתאימה לו בדיוק</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card rv">
+        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2C8 2 4.5 5.5 4.5 9.5c0 2.5 1.3 4.7 3.2 6V18a.5.5 0 00.5.5h7.6a.5.5 0 00.5-.5v-2.5c1.9-1.3 3.2-3.5 3.2-6C19.5 5.5 16 2 12 2z"/><path d="M9 18.5v1.5a1 1 0 001 1h4a1 1 0 001-1v-1.5"/></svg></div>
+        <h3>אינטליגנציה יוצאת דופן</h3>
+        <p>פודלים מדורגים מקום ה-2 בסולם החכמה הכלבית. הם קולטים פקודות במהירות ואוהבים ללמוד בכל גיל.</p>
+      </div>
+      <div class="why-card rv" style="transition-delay:.1s">
+        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2a9 9 0 100 18A9 9 0 0012 2z"/><path d="M8.5 13.5s1.2 1.5 3.5 1.5 3.5-1.5 3.5-1.5"/><circle cx="9.5" cy="9.5" r="1" fill="#FF5A5F"/><circle cx="14.5" cy="9.5" r="1" fill="#FF5A5F"/></svg></div>
+        <h3>לא שופכים שיער</h3>
+        <p>מושלם לאלרגיים ולבית נקי. הפרווה ההיפואלרגנית מייחדת את הפודל מרוב גזעי הכלבים.</p>
+      </div>
+      <div class="why-card rv" style="transition-delay:.2s">
+        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+        <h3>לומדים בשמחה</h3>
+        <p>נולדו ללמוד. פודלים מגיבים בצורה יוצאת דופן לאימון חיובי ומפתחים קשר עמוק עם המאמן.</p>
+      </div>
+      <div class="why-card rv" style="transition-delay:.3s">
+        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>קהילה חמה</h3>
+        <p>משפחת הפודל קלאב תתמוך בכם לאורך כל הדרך - עם קבוצת תמיכה, חומרים ומפגשי בוגרים.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Wave: Why → How ───────────────────────────────────────────────── -->
+<div class="wave" style="background:var(--plum)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#FFF8F0"/>
+  </svg>
+</div>
+
+<!-- ─── How It Works ──────────────────────────────────────────────────── -->
+<section id="how">
+  <div class="how-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--coral">התהליך</div>
+      <h2 class="s-title">איך זה עובד</h2>
+      <div class="s-accent-line"></div>
+      <p class="s-sub">תהליך פשוט, ברור ומותאם אישית לכם ולכלב שלכם</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step rv">
+        <div class="how-num">01</div>
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07A19.5 19.5 0 015.2 12.8a19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <h3>שיחת התאמה אישית</h3>
+        <p>נכיר את הכלב שלכם, נבין את המטרות, ונבדוק יחד איזה מסלול מתאים - בלי התחייבות.</p>
+      </div>
+      <div class="how-arr" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 20h24M24 12l8 8-8 8"/></svg>
+      </div>
+      <div class="how-step rv" style="transition-delay:.15s">
+        <div class="how-num">02</div>
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>אימון קבוצתי שבועי</h3>
+        <p>פגישות קבוצתיות עם פודלים מאותו גיל וסוג - סביבה מיטיבה ומהנה לכלב ולכם.</p>
+      </div>
+      <div class="how-arr" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 20h24M24 12l8 8-8 8"/></svg>
+      </div>
+      <div class="how-step rv" style="transition-delay:.3s">
+        <div class="how-num">03</div>
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>הצלחה מוכחת</h3>
+        <p>כלבים מאמנים שמכירים אתכם - ותמיכה רציפה גם אחרי סיום המסלול.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Coral Ticker: How → Benefits ──────────────────────────────────── -->
+<div class="ticker ticker--coral">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול בסיס · מסלול מתקדם</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול בסיס · מסלול מתקדם</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
+  </div>
+</div>
+<!-- ─── Wave: How → Benefits ──────────────────────────────────────────── -->
+<div class="wave" style="background:var(--coral)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#F5E4CC"/>
+  </svg>
+</div>
+
+<!-- ─── Benefits ─────────────────────────────────────────────────────── -->
+<section id="benefits">
+  <div class="ben-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--plum">מה כלול</div>
+      <h2 class="s-title">מה אתם מקבלים</h2>
+      <div class="s-accent-line"></div>
+      <p class="s-sub">הרבה יותר מסתם שיעורי אילוף - תמיכה מלאה לאורך כל הדרך</p>
+    </div>
+    <!-- ─── Orbital Benefits ─── -->
+    <style>
+      #orbit-wrap{display:flex;justify-content:center;padding:24px 0 64px;overflow:visible;}
+      #orbit-canvas{position:relative;width:min(520px,88vw);height:min(520px,88vw);flex-shrink:0;}
+      .onode{position:absolute;top:50%;left:50%;cursor:pointer;user-select:none;}
+      .onode-inner{width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid transparent;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;}
+      .onode-inner svg{width:20px;height:20px;pointer-events:none;}
+      .onode:hover .onode-inner{transform:scale(1.2);}
+      .onode.on .onode-inner{transform:scale(1.5);box-shadow:0 6px 22px rgba(61,26,74,.22);}
+      .onode-lbl{position:absolute;top:30px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.63rem;font-weight:700;color:var(--plum);pointer-events:none;line-height:1;transition:font-size .2s;}
+      .onode.on .onode-lbl{font-size:.7rem;}
+      #orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1.5px dashed rgba(61,26,74,.18);transform:translate(-50%,-50%);pointer-events:none;}
+      #orbit-cx{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:var(--white);border:2.5px solid var(--rose);box-shadow:0 4px 20px rgba(61,26,74,.14),inset 0 1px 0 rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;text-align:center;z-index:10;cursor:default;}
+      #orbit-cx span{font-weight:800;color:var(--plum);line-height:1.4;padding:6px;}
+      .onode-popup{position:absolute;bottom:58px;left:50%;transform:translateX(-50%);width:210px;background:var(--white);border-radius:14px;padding:14px 16px 16px;box-shadow:0 14px 44px rgba(61,26,74,.18),0 4px 12px rgba(61,26,74,.1);border:1.5px solid var(--rose-lt);z-index:400;direction:rtl;text-align:right;pointer-events:none;}
+      .onode-popup b{display:block;font-size:.83rem;font-weight:800;color:var(--plum);margin-bottom:6px;}
+      .onode-popup p{font-size:.74rem;color:var(--text-mid);line-height:1.65;margin:0;}
+      .onode-popup-tip{position:absolute;bottom:-6px;left:50%;width:11px;height:11px;background:var(--white);border-right:1.5px solid var(--rose-lt);border-bottom:1.5px solid var(--rose-lt);transform:translateX(-50%) rotate(45deg);}
+      @keyframes orb-ping{to{transform:translate(-50%,-50%) scale(2.8);opacity:0;}}
+      .onode-ping{position:absolute;top:50%;left:50%;width:46px;height:46px;border-radius:50%;border:2px solid var(--coral);transform:translate(-50%,-50%);animation:orb-ping 1.5s ease-out infinite;pointer-events:none;opacity:.55;}
+    </style>
+    <div id="orbit-wrap">
+      <div id="orbit-canvas">
+        <div id="orbit-ring"></div>
+        <div id="orbit-cx"><span></span></div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var canvas=document.getElementById('orbit-canvas');
+      var ring=document.getElementById('orbit-ring');
+      var cx=document.getElementById('orbit-cx');
+      var NODES=[
+        {id:0,title:'אימון מותאם לגזע',      desc:'שיטות שפותחו במיוחד לפודל - לא גנרי, אלא מדויק לצרכים ולאופי הייחודי של הגזע.',color:'#FF5A5F',bg:'rgba(255,90,95,.1)',   icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'},
+        {id:1,title:'ליווי אישי בין מפגשים', desc:'לא נשארים לבד. תמיכה ופידבק אישי לכל שאלה שעולה בין שיעור לשיעור.',            color:'#3D1A4A',bg:'rgba(61,26,74,.09)',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
+        {id:2,title:'קבוצת וואטסאפ תומכת',   desc:'קבוצה חיה ופעילה של בעלי פודלים - שאלות, טיפים, הצלחות ורגעים מתוקים.',       color:'#1DAA61',bg:'rgba(29,170,97,.1)',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'},
+        {id:3,title:'חומרי לימוד דיגיטליים', desc:'מדריכים, סרטונים וגיליונות תרגול - נגישים לכם בכל זמן, גם בין הפגישות.',      color:'#E07888',bg:'rgba(224,120,136,.1)',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'},
+        {id:4,title:'מפגשי בוגרים',           desc:'גם אחרי שמסיימים, הקהילה ממשיכה - מפגשים ואתגרים לבוגרי הפודל קלאב.',      color:'#E07888',bg:'rgba(242,167,176,.2)',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'},
+        {id:5,title:'גיבוי מקצועי בכל עת',   desc:'כשמשהו לא הולך כמתוכנן - יש לכם מאמן מוסמך זמין לענות ולעזור לפתור.',       color:'#5A2870',bg:'rgba(90,40,112,.08)', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'}
+      ];
+      var R=0,ang=0,autoRot=true,activeId=null;
+
+      function resize(){
+        var w=canvas.offsetWidth;
+        R=Math.min(195,w*0.375);
+        var d=R*2+28;
+        ring.style.width=d+'px'; ring.style.height=d+'px';
+        var cs=Math.min(112,R*0.56);
+        cx.style.width=cs+'px'; cx.style.height=cs+'px';
+        cx.querySelector('span').style.fontSize=Math.max(9,cs*0.115)+'px';
+        cx.querySelector('span').innerHTML='מה אתם<br>מקבלים';
+      }
+
+      var els=NODES.map(function(n,i){
+        var el=document.createElement('div');
+        el.className='onode';
+        el.innerHTML='<div class="onode-inner" style="background:'+n.bg+';border-color:'+n.color+';color:'+n.color+';">'+n.icon+'</div><div class="onode-lbl">'+n.title+'</div>';
+        el.addEventListener('click',function(e){e.stopPropagation();toggle(n.id,i);});
+        canvas.appendChild(el);
+        return el;
+      });
+
+      document.getElementById('orbit-wrap').addEventListener('click',function(){deactivate();});
+
+      function toggle(id,idx){
+        if(activeId===id){deactivate();return;}
+        deactivate(true);
+        activeId=id; autoRot=false;
+        ang=-(idx/NODES.length)*360;
+        var el=els[idx];
+        el.classList.add('on');
+        var ping=document.createElement('div'); ping.className='onode-ping'; el.appendChild(ping);
+        var pop=document.createElement('div'); pop.className='onode-popup';
+        pop.innerHTML='<b>'+NODES[idx].title+'</b><p>'+NODES[idx].desc+'</p><div class="onode-popup-tip"></div>';
+        el.appendChild(pop);
+      }
+
+      function deactivate(hold){
+        activeId=null;
+        els.forEach(function(el){
+          el.classList.remove('on');
+          var c=el.querySelector('.onode-ping'); if(c)c.remove();
+          var p=el.querySelector('.onode-popup'); if(p)p.remove();
+        });
+        if(!hold) autoRot=true;
+        else setTimeout(function(){autoRot=true;},700);
+      }
+
+      function tick(){
+        if(autoRot) ang=(ang+0.25)%360;
+        NODES.forEach(function(n,i){
+          var a=((i/NODES.length)*360+ang)*Math.PI/180;
+          var x=R*Math.cos(a),y=R*Math.sin(a);
+          var isAct=n.id===activeId;
+          var op=activeId!==null?(isAct?1:0.25):Math.max(0.42,0.42+0.58*((1+Math.sin(a))/2));
+          els[i].style.transform='translate('+x+'px,'+y+'px)';
+          els[i].style.opacity=op;
+          els[i].style.zIndex=isAct?200:(50+Math.round(30*Math.cos(a)));
+        });
+        requestAnimationFrame(tick);
+      }
+
+      resize();
+      window.addEventListener('resize',resize);
+      requestAnimationFrame(tick);
+    })();
+    </script>
+  </div>
+</section>
+
+<!-- ─── Trainer ───────────────────────────────────────────────────────── -->
+<section id="trainer">
+  <div class="tr-in">
+    <div class="tr-img-wrap rv">
+      <img src="profile-pic.jpg" alt="אוראל לוי - מאמן פודלים" class="tr-img">
+      <div class="tr-badge">8 שנות ניסיון</div>
+    </div>
+    <div class="rv" style="transition-delay:.15s">
+      <div class="s-eyebrow s-eyebrow--plum">המאמן</div>
+      <h2 class="s-title">מי אני</h2>
+      <div class="s-accent-line"></div>
+      <p class="tr-bio">
+        שמי אוראל לוי, מאמן פודלים מוסמך עם ניסיון של 8 שנים בעבודה עם גזע הפודל בכל גדליו ומוצאיו.
+        הדרך שלי אל האימון התחילה כשגידלתי את הפודל הטוי הראשון שלי - וגיליתי עד כמה הגזע הזה דורש גישה מיוחדת ומותאמת.
+        <br><br>
+        אני מאמין שאימון טוב הוא שיחה בין הכלב לבעלים, עם המאמן כמתרגם. המסלולים שלי בנויים כך שגם אתם תצאו עם כלים - לא רק הכלב.
+      </p>
+      <ul class="tr-creds">
+        <li>מאמן כלבים מוסמך, מכללת איל"ן</li>
+        <li>מומחה גזע פודל - התאחדות הכלבנות בישראל</li>
+        <li>בוגר השתלמויות בינלאומיות בשיטת Positive Reinforcement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Wave: Trainer → Tracks ───────────────────────────────────────── -->
+<div class="wave" style="background:var(--sand)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#3D1A4A"/>
+  </svg>
+</div>
+
+<!-- ─── Tracks ────────────────────────────────────────────────────────── -->
+<section id="tracks">
+  <div class="tracks-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--white">מסלולים</div>
+      <h2 class="s-title s-title--white">המסלולים שלנו</h2>
+      <div class="s-accent-line s-accent-line--mint"></div>
+      <p class="s-sub s-sub--white">בחרו את המסלול המתאים לכם ולכלב שלכם</p>
+    </div>
+    <div class="tr-toggle">
+      <button class="tr-btn on" data-track="basis">מסלול בסיס</button>
+      <button class="tr-btn" data-track="advanced">מסלול מתקדם</button>
+    </div>
+    <div class="tr-panel on" data-track="basis">
+      <div class="tr-body">
+        <ul class="tr-list">
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 פגישות קבוצתיות שבועיות</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>4 מפגשי חניכה אישיים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>פקודות בסיס: שב, שכב, עצור, בוא</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>כלים לניהול אנרגיה ועוררות</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>גישה לקבוצת הוואטסאפ התומכת</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>חומרי לימוד דיגיטליים בסיסיים</li>
+        </ul>
+        <div class="tr-box">
+          <h3>מסלול בסיס — 6 + 4</h3>
+          <p>מתאים לגורים ולכלבים שמתחילים את דרכם. ביסוס שגרה ברורה ומתן כלים לטווח ארוך.</p>
+          <div class="tr-note">המחיר נקבע בשיחת התאמה אישית לפי הכלב והמטרות שלכם</div>
+          <a href="#contact" class="btn btn-coral" style="width:100%;">בדקו התאמה</a>
+        </div>
+      </div>
+    </div>
+    <div class="tr-panel" data-track="advanced">
+      <div class="tr-body">
+        <ul class="tr-list">
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>8 פגישות קבוצתיות שבועיות</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>4 מפגשי חניכה אישיים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תכנית בית מותאמת אישית לכלב</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>פקודות מתקדמות ואתגרים קוגניטיביים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>עבודה על מצבי דחק וסביבות חדשות</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>כניסה למפגשי הבוגרים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ספריית סרטונים + חומרי לימוד מורחבים</li>
+        </ul>
+        <div class="tr-box">
+          <h3>מסלול מתקדם — 8 + 4</h3>
+          <p>מתאים לפודלים שעברו בסיס, לכלבים עם אנרגיה גבוהה, או לכאלה שרוצים לדחוף את הגבולות.</p>
+          <div class="tr-note">המחיר נקבע בשיחת התאמה אישית לפי הכלב והמטרות שלכם</div>
+          <a href="#contact" class="btn btn-coral" style="width:100%;">בדקו התאמה</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Wave: Tracks → FAQ ────────────────────────────────────────────── -->
+<div class="wave" style="background:var(--plum)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#FFF8F0"/>
+  </svg>
+</div>
+
+<!-- ─── FAQ ───────────────────────────────────────────────────────────── -->
+<section id="faq">
+  <div class="faq-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--plum" style="margin:0 auto 16px;">שאלות</div>
+      <h2 class="s-title" style="text-align:center">שאלות נפוצות</h2>
+      <div class="s-accent-line s-accent-line--center"></div>
+      <p class="s-sub" style="text-align:center">כל מה שרציתם לדעת לפני שמצטרפים</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item rv">
+        <button class="faq-q" aria-expanded="false">מה ההבדל בין מסלול בסיס למתקדם?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">מסלול הבסיס (6+4) מתאים לגורים ולכלבים שמתחילים. הוא מכסה פקודות יסוד, שגרה ותקשורת בסיסית. מסלול מתקדם (8+4) כולל תכנית בית אישית, עבודה על מצבים מורכבים ופקודות ברמה גבוהה - מתאים לפודלים שסיימו בסיס או לכאלה עם ניסיון קודם.</div></div>
+      </div>
+      <div class="faq-item rv" style="transition-delay:.05s">
+        <button class="faq-q" aria-expanded="false">מאיזה גיל ניתן להתחיל?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">ניתן להתחיל כבר מגיל 3-4 חודשים - זהו החלון האידיאלי להטמעת הרגלים חיוביים. כלבים מבוגרים יותר יכולים להצטרף בכל גיל, פודלים לא מפסיקים ללמוד.</div></div>
+      </div>
+      <div class="faq-item rv" style="transition-delay:.1s">
+        <button class="faq-q" aria-expanded="false">כמה כלבים בקבוצה?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">הקבוצות מוגבלות ל-6 כלבים לכל היותר, כדי שכל כלב יקבל תשומת לב אישית. הקבוצות מחולקות לפי גיל וגודל, כך שהפגישות יהיו סביבה בטוחה ומעשירה.</div></div>
+      </div>
+      <div class="faq-item rv" style="transition-delay:.15s">
+        <button class="faq-q" aria-expanded="false">האם המסלול מתאים לכלב שכבר עשה אימון?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">בהחלט. כלבים שעשו אימון קודם יכולים להצטרף ישירות למסלול המתקדם. בשיחת ההתאמה נבדוק יחד מהי הרמה המתאימה - לא נרצה שהכלב שלכם ישעמם.</div></div>
+      </div>
+      <div class="faq-item rv" style="transition-delay:.2s">
+        <button class="faq-q" aria-expanded="false">איך נקבע המחיר?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">המחיר נקבע בשיחת התאמה אישית לפי הכלב שלכם, גילו, הרקע שלו, והמטרות שאתם מגדירים. לא מאמין במחירון אחד לכולם - כי כל כלב הוא סיפור שונה.</div></div>
+      </div>
+      <div class="faq-item rv" style="transition-delay:.25s">
+        <button class="faq-q" aria-expanded="false">מה אם פספסנו פגישה?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">כל משתתף יכול לפספס פגישה אחת ולקבל תחליף בקבוצה אחרת שמתאימה לרמתם. מעבר לכך, נמצא יחד פתרון - לא עוזבים אף אחד מאחור.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Wave: FAQ → Contact ───────────────────────────────────────────── -->
+<div class="wave" style="background:var(--cream)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#3D1A4A"/>
+  </svg>
+</div>
+
+<!-- ─── Contact ───────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="con-in">
+    <div class="s-eyebrow s-eyebrow--white" style="margin:0 auto 20px;">הצטרפו</div>
+    <h2 class="s-title s-title--white" style="text-align:center;font-size:clamp(1.8rem,3.5vw,2.8rem)">מוכנים להצטרף למשפחת הפודל קלאב?</h2>
+    <div class="s-accent-line s-accent-line--center s-accent-line--mint" style="margin-top:20px;"></div>
+    <p class="s-sub s-sub--white">השאירו פרטים ונחזור אליכם לשיחת התאמה קצרה - בלי התחייבות</p>
+    <form id="contact-form" novalidate>
+      <div class="f-field"><input type="text" name="name" placeholder="שם מלא" required autocomplete="name"></div>
+      <div class="f-field"><input type="tel" name="phone" placeholder="050-000-0000" dir="ltr" required autocomplete="tel"></div>
+      <div class="f-field">
+        <select name="dog_type" required>
+          <option value="" disabled selected>סוג הכלב שלכם</option>
+          <option value="toy">פודל טוי</option>
+          <option value="mini">פודל מיני</option>
+          <option value="standard">פודל סטנדרט</option>
+          <option value="doodle">דודל</option>
+          <option value="maltipoo">מלטיפו</option>
+          <option value="shihpoo">שיהפו</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <button type="submit" class="f-submit">שלחו לי פרטים</button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── Popup: Engagement ─────────────────────────────────────────────── -->
+<div id="popup-eng" class="popup" role="dialog" aria-modal="true" aria-labelledby="pe-title">
+  <div class="p-ov"></div>
+  <div class="p-box">
+    <button class="p-close" aria-label="סגור">✕</button>
+    <div class="p-paw">🐩</div>
+    <h3 id="pe-title">רגע לפני שממשיכים...</h3>
+    <p>יש לכם שאלות על האימון? רוצים לבדוק האם הפודל שלכם מתאים? שיחת ההתאמה שלנו קצרה ובלי התחייבות.</p>
+    <button class="p-cta" id="pe-cta">לשיחת התאמה חינמית</button>
+  </div>
+</div>
+
+<!-- ─── Popup: Exit Intent ────────────────────────────────────────────── -->
+<div id="popup-exit" class="popup" role="dialog" aria-modal="true" aria-labelledby="pex-title">
+  <div class="p-ov"></div>
+  <div class="p-box">
+    <button class="p-close" aria-label="סגור">✕</button>
+    <div class="p-paw">🐾</div>
+    <h3 id="pex-title">עוצרים? נשמח לענות</h3>
+    <p>לפני שעוזבים - השאירו פרטים ונחזור אליכם תוך שעה עם כל התשובות.</p>
+    <button class="p-cta" id="pex-cta">השאירו פרטים</button>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">POODLE CLUB</div>
+  <div style="margin-top:6px">by Orel Levi &nbsp;·&nbsp; © 2026 · כל הזכויות שמורות</div>
+</footer>
+
+<script>
+  // ─── Sticky Nav ──────────────────────────────────────────────────────
+  const nav = document.getElementById('nav');
+  new IntersectionObserver(([e]) => nav.classList.toggle('on', !e.isIntersecting), { threshold: 0.05 })
+    .observe(document.getElementById('hero'));
+
+  // ─── Scroll Reveal ───────────────────────────────────────────────────
+  // ?reveal=all → instant reveal (for screenshot tools)
+  if (new URLSearchParams(location.search).get('reveal') === 'all') {
+    document.querySelectorAll('.rv, .rv-left, .rv-right').forEach(el => {
+      el.style.transition = 'none'; el.classList.add('on');
+    });
+  } else {
+    const rvObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); rvObs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.rv, .rv-left, .rv-right').forEach(el => rvObs.observe(el));
+  }
+
+  // ─── Hero Video Reveal ───────────────────────────────────────────────
+  const heroVideoWrap = document.getElementById('hero-video-wrap');
+  if (heroVideoWrap) {
+    const videoRevealObs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => { heroVideoWrap.classList.add('revealed'); }, 150);
+        videoRevealObs.unobserve(heroVideoWrap);
+      }
+    }, { threshold: 0.15 });
+    videoRevealObs.observe(heroVideoWrap);
+  }
+
+  // ─── FAQ ─────────────────────────────────────────────────────────────
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const ans  = item.querySelector('.faq-a');
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => {
+        o.classList.remove('open');
+        o.querySelector('.faq-a').style.maxHeight = null;
+        o.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ─── Track Toggle ────────────────────────────────────────────────────
+  document.querySelectorAll('.tr-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.track;
+      document.querySelectorAll('.tr-btn').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.tr-panel').forEach(p => p.classList.remove('on'));
+      btn.classList.add('on');
+      document.querySelector(`.tr-panel[data-track="${t}"]`).classList.add('on');
+    });
+  });
+
+  // ─── Popups ──────────────────────────────────────────────────────────
+  let engShown = false, exitShown = false;
+  function showPop(id) { document.getElementById(id).classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function hidePop(id) { document.getElementById(id).classList.remove('on'); document.body.style.overflow = ''; }
+
+  document.querySelectorAll('.p-close').forEach(b => b.addEventListener('click', () => hidePop(b.closest('.popup').id)));
+  document.querySelectorAll('.popup').forEach(p => p.querySelector('.p-ov').addEventListener('click', () => hidePop(p.id)));
+  document.getElementById('pe-cta').addEventListener('click', () => { hidePop('popup-eng'); document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); });
+  document.getElementById('pex-cta').addEventListener('click', () => { hidePop('popup-exit'); document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') ['popup-eng','popup-exit'].forEach(id => { if (document.getElementById(id).classList.contains('on')) hidePop(id); }); });
+
+  const engTimer = setTimeout(() => { if (!engShown) { showPop('popup-eng'); engShown = true; } }, 30000 + Math.random() * 5000);
+  const onScroll = () => {
+    if (engShown) { window.removeEventListener('scroll', onScroll); return; }
+    if (window.scrollY / (document.documentElement.scrollHeight - innerHeight) >= 0.4) {
+      clearTimeout(engTimer); showPop('popup-eng'); engShown = true; window.removeEventListener('scroll', onScroll);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('mouseleave', e => { if (e.clientY <= 0 && !exitShown && !engShown) { showPop('popup-exit'); exitShown = true; } });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') exitShown = true; });
+
+  // ─── Form ────────────────────────────────────────────────────────────
+  const WEBHOOK = 'WEBHOOK_PLACEHOLDER';
+  document.getElementById('contact-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const form = e.target, btn = form.querySelector('.f-submit'), fd = new FormData(form);
+    const oldErr = form.querySelector('.f-err'); if (oldErr) oldErr.remove();
+    btn.disabled = true; btn.textContent = 'שולח...';
+    try {
+      const r = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: fd.get('name'), phone: fd.get('phone'), dog_type: fd.get('dog_type'), source: 'poodle_club', ts: new Date().toISOString() }) });
+      if (!r.ok) throw new Error();
+      form.innerHTML = `<div class="f-success"><div style="font-size:2.5rem;margin-bottom:14px">🐩</div><h3>תודה! קיבלנו את הפרטים</h3><p>נחזור אליכם תוך 24 שעות לשיחת ההתאמה - מחכים לשמוע על הפודל שלכם!</p></div>`;
+    } catch {
+      btn.disabled = false; btn.textContent = 'שלחו לי פרטים';
+      const err = document.createElement('p'); err.className = 'f-err'; err.textContent = 'אירעה שגיאה בשליחה. אנא נסו שוב.';
+      form.appendChild(err);
+    }
+  });
+
+  // ─── Micro-interactions ──────────────────────────────────────────────
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('mousemove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX - r.left - r.width/2) * .1}px, ${(e.clientY - r.top - r.height/2) * .1}px) scale(1.03)`;
+    });
+    b.addEventListener('mouseleave', () => { b.style.transform = ''; });
+  });
+
+  document.querySelectorAll('.why-card, .ben-card').forEach(c => {
+    c.addEventListener('mousemove', e => {
+      const r = c.getBoundingClientRect();
+      c.style.transform = `perspective(700px) rotateY(${((e.clientX-r.left)/r.width-.5)*6}deg) rotateX(${-((e.clientY-r.top)/r.height-.5)*6}deg) translateY(-6px)`;
+    });
+    c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+  });
+
+  // ─── Breed card tilt ─────────────────────────────────────────────────
+  document.querySelectorAll('.breed-card').forEach(c => {
+    c.addEventListener('mousemove', e => {
+      const r = c.getBoundingClientRect();
+      const tiltX = ((e.clientY - r.top) / r.height - 0.5) * -8;
+      const tiltY = ((e.clientX - r.left) / r.width - 0.5) * 8;
+      c.style.transform = `perspective(600px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-12px)`;
+    });
+    c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+  });
+</script>
+
+<script>
+// ─── Hero Animated Gradient (full-screen + scroll parallax) ──────────
+(function(){
+  var bg   = document.getElementById('hero-grad-bg');
+  var hero = document.getElementById('hero');
+  if (!bg) return;
+  var colors = ['#0A0A0A','#2979FF','#FF80AB','#FF6D00','#FFD600','#00E676','#3D5AFE'];
+  var stops  = [35, 50, 60, 70, 80, 90, 100];
+  var cy = 20; // gradient center-Y percentage, shifts on scroll
+
+  // Shift gradient center as hero scrolls out of view (parallax)
+  window.addEventListener('scroll', function() {
+    var heroH = hero.offsetHeight || window.innerHeight;
+    var progress = Math.min(1, window.scrollY / heroH);
+    cy = 20 + progress * 50; // 20% at top → 70% as hero exits
+  }, { passive: true });
+
+  function frame() {
+    var s = stops.map(function(st,i){ return colors[i]+' '+st+'%'; }).join(',');
+    bg.style.background = 'radial-gradient(125% 125% at 50% '+cy.toFixed(1)+'%,'+s+')';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
