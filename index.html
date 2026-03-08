@@ -337,16 +337,17 @@
     }
 
     .hero-poodle {
-      font-size: 7rem;
+      width: 320px;
+      max-width: 80vw;
       display: block;
       margin-bottom: 20px;
+      flex-shrink: 0;
+      mix-blend-mode: screen;
       animation: poodleFloat 3.5s ease-in-out infinite;
-      filter: drop-shadow(0 0 28px rgba(255,128,171,0.7)) drop-shadow(0 0 60px rgba(41,121,255,0.4));
-      line-height: 1;
     }
     @keyframes poodleFloat {
-      0%,100% { transform: translateY(0) rotate(-4deg); }
-      50%      { transform: translateY(-18px) rotate(4deg); }
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
     }
 
     .hero-scroll {
@@ -842,7 +843,7 @@
 <section id="hero">
   <div id="hero-grad-bg"></div>
   <div class="hero-in">
-    <span class="hero-poodle rv">🐩</span>
+    <img src="animation-hero.gif" class="hero-poodle rv" alt="פודלים">
     <div class="hero-content rv" style="transition-delay:.1s">
       <div class="hero-tag">
         <span class="hero-tag-dot"></span>
