@@ -509,17 +509,32 @@
     }
     .how-step h3 { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
     .how-step p  { font-size: .9rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
-    /* Paw prints */
-    .how-paws { position: absolute; inset: 0; pointer-events: none; z-index: 10; overflow: visible; }
-    .paw-print {
-      position: absolute;
-      width: 32px; height: 32px;
-      opacity: 0;
-      transform: scale(0);
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      color: rgba(255,255,255,0.4);
+    .how-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,90,95,0.18);
+      border: 1px solid rgba(255,90,95,0.35);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
     }
-    .paw-print.stamped { opacity: 1; transform: scale(1) rotate(var(--paw-rot, 0deg)); }
+    .how-icon svg { width: 24px; height: 24px; color: var(--coral); }
+    /* Paw trail */
+    .how-trail {
+      position: relative;
+      height: 64px;
+      margin-top: 12px;
+      overflow: visible;
+    }
+    .trail-paw {
+      position: absolute;
+      width: 28px; height: 28px;
+      opacity: 0;
+      transform: scale(0) rotate(var(--pr, 0deg));
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      color: rgba(255,255,255,0.45);
+      transition-delay: var(--pd, 0s);
+    }
+    .trail-paw.stamped { opacity: 1; transform: scale(1) rotate(var(--pr, 0deg)); }
 
     /* ─── BENEFITS ───────────────────────────────────────────── */
     #benefits { background: var(--sand); padding: var(--pad) 24px; position: relative; }
@@ -1017,26 +1032,39 @@
     </div>
     <div class="how-steps" id="how-steps-grid">
       <div class="how-step rv">
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
         <div class="how-num">01</div>
         <h3>שיחת התאמה אישית</h3>
         <p>נכיר את הכלב שלכם, נבין את המטרות, ונבדוק יחד איזה מסלול מתאים - בלי התחייבות.</p>
       </div>
       <div class="how-step rv" style="transition-delay:.1s">
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        </div>
         <div class="how-num">02</div>
         <h3>אבחון ובניית תוכנית</h3>
         <p>פגישה שבה צוללים לעומק, מבינים את צרכי הכלב, בונים תוכנית עבודה מדויקת ובוחרים את חבילת התהליך האידיאלית עבורכם.</p>
       </div>
       <div class="how-step rv" style="transition-delay:.2s">
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>
+        </div>
         <div class="how-num">03</div>
         <h3>מודל ליווי משולב</h3>
         <p>מתחילים בלימוד פרטני ומעמיק לביסוס היסודות. לאחר מכן, עוברים למודל היברידי המשלב עבודה פרטנית יחד עם אימונים קבוצתיים במקביל.</p>
       </div>
       <div class="how-step rv" style="transition-delay:.3s">
+        <div class="how-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47 1-1.05 1.32L8 19h8l-1-1.68C14.47 18 14 17.55 14 17v-2.34"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+        </div>
         <div class="how-num">04</div>
         <h3>תוצאות מוכחות</h3>
         <p>שיפור משמעותי באיכות החיים המשותפת עם הכלב. אתם נהנים מכלב רגוע, ממושמע ומבין עניין בבית ובחוץ - לאורך זמן.</p>
       </div>
     </div>
+    <div class="how-trail" id="how-trail"></div>
   </div>
 </section>
 
@@ -1533,54 +1561,52 @@
 </script>
 
 <script>
-// ─── Paw Print Scroll Animation ──────────────────────────────────────
+// ─── Continuous Paw Trail Scroll Animation ───────────────────────────
 (function(){
-  var grid = document.getElementById('how-steps-grid');
-  if (!grid) return;
+  var trail = document.getElementById('how-trail');
+  if (!trail) return;
+  var N = 10;
   var pawSVG = '<svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><ellipse cx="20" cy="27" rx="8" ry="7"/><ellipse cx="10" cy="18" rx="4" ry="3.5" transform="rotate(-20 10 18)"/><ellipse cx="16" cy="13" rx="3.5" ry="4"/><ellipse cx="24" cy="13" rx="3.5" ry="4"/><ellipse cx="30" cy="18" rx="4" ry="3.5" transform="rotate(20 30 18)"/></svg>';
-  var pawContainer = document.createElement('div');
-  pawContainer.className = 'how-paws';
   var paws = [];
-  var rotations = ['-15deg','15deg','-15deg'];
-  for (var i = 0; i < 3; i++) {
-    var p = document.createElement('div');
-    p.className = 'paw-print';
-    p.innerHTML = pawSVG;
-    p.style.setProperty('--paw-rot', rotations[i]);
-    pawContainer.appendChild(p);
-    paws.push(p);
+  var rotations = [-20, 20, -20, 20, -20, 20, -20, 20, -20, 20];
+  for (var i = 0; i < N; i++) {
+    var el = document.createElement('div');
+    el.className = 'trail-paw';
+    el.innerHTML = pawSVG;
+    el.style.setProperty('--pr', rotations[i] + 'deg');
+    el.style.setProperty('--pd', (i * 0.06) + 's');
+    trail.appendChild(el);
+    paws.push(el);
   }
-  grid.appendChild(pawContainer);
 
   function positionPaws() {
-    var cards = grid.querySelectorAll('.how-step');
-    if (cards.length < 4) return;
+    var W = trail.offsetWidth;
+    var H = trail.offsetHeight;
     var mobile = window.innerWidth <= 600;
-    var gridRect = grid.getBoundingClientRect();
-    for (var i = 0; i < 3; i++) {
-      var c1 = cards[i].getBoundingClientRect();
-      var c2 = cards[i+1].getBoundingClientRect();
-      var midX, midY;
+    for (var i = 0; i < N; i++) {
+      var t = i / (N - 1);
+      var x, y;
       if (mobile) {
-        midX = (c1.left + c1.right) / 2 - gridRect.left - 16;
-        midY = (c1.bottom + c2.top) / 2 - gridRect.top - 16;
+        x = (i % 2 === 0) ? W * 0.3 : W * 0.6;
+        y = t * (H - 28);
       } else {
-        midX = (c1.right + c2.left) / 2 - gridRect.left - 16;
-        midY = (c1.top + c1.bottom) / 2 - gridRect.top - 16;
+        x = t * (W - 28);
+        y = (i % 2 === 0) ? 4 : 32;
       }
-      paws[i].style.left = midX + 'px';
-      paws[i].style.top  = midY + 'px';
+      paws[i].style.left = x + 'px';
+      paws[i].style.top  = y + 'px';
     }
   }
 
   function onScroll() {
-    var rect = grid.getBoundingClientRect();
+    var section = document.getElementById('how');
+    if (!section) return;
+    var rect = section.getBoundingClientRect();
     var winH = window.innerHeight;
-    var progress = Math.max(0, Math.min(1, (winH - rect.top) / (winH + rect.height)));
-    var thresholds = [0.25, 0.5, 0.75];
-    paws.forEach(function(p, i) {
-      if (progress >= thresholds[i]) p.classList.add('stamped');
-    });
+    var progress = Math.max(0, Math.min(1, (winH - rect.top) / (winH * 0.8 + rect.height * 0.5)));
+    for (var i = 0; i < N; i++) {
+      if (progress >= (i + 1) / (N + 1)) paws[i].classList.add('stamped');
+    }
   }
 
   positionPaws();
