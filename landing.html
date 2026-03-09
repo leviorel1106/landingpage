@@ -589,6 +589,8 @@
       position: absolute;
       top: -70px; left: 50%; transform: translateX(-50%);
       width: 140px; height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
       cursor: pointer; z-index: 10;
     }
     .tmt-avatar-wrap::after {
@@ -618,10 +620,10 @@
         0 0 80px rgba(196,168,250,0.65),
         0 12px 40px rgba(61,26,74,0.35);
     }
-    @keyframes tmtIn  { from{opacity:0;transform:translate(220px,-140px) scale(0.65)} to{opacity:1;transform:none} }
-    @keyframes tmtOut { from{opacity:1;transform:none} to{opacity:0;transform:translate(-220px,140px) scale(0.65)} }
-    .tmt-avatar--in  { animation: tmtIn  0.7s cubic-bezier(0.25,0.1,0.25,1) forwards; }
-    .tmt-avatar--out { animation: tmtOut 0.45s cubic-bezier(0.55,0,1,0.45) forwards; }
+    @keyframes tmtIn  { from{opacity:0;transform:rotate(-60deg)} to{opacity:1;transform:rotate(0deg)} }
+    @keyframes tmtOut { from{opacity:1;transform:rotate(0deg)} to{opacity:0;transform:rotate(60deg)} }
+    .tmt-avatar--in  { animation: tmtIn  0.7s cubic-bezier(0.68,-0.3,0.32,1) forwards; }
+    .tmt-avatar--out { animation: tmtOut 0.5s cubic-bezier(0.68,-0.3,0.32,1) forwards; }
     .tmt-bubble {
       position: absolute;
       bottom: calc(100% + 16px);
@@ -677,7 +679,7 @@
 
     @media (max-width: 600px) {
       .tmt-avatar { width: 116px; height: 116px; }
-      .tmt-avatar-wrap { top: -58px; width: 116px; height: 116px; }
+      .tmt-avatar-wrap { top: -58px; width: 116px; height: 116px; border-radius: 50%; overflow: hidden; }
       .tmt-orb { overflow: visible; }
       .tmt-bubble { width: 94vw; }
     }
@@ -1947,8 +1949,8 @@
       avatar.alt = DATA[active].name;
       avatar.classList.remove('tmt-avatar--out');
       avatar.classList.add('tmt-avatar--in');
-      setTimeout(function(){ avatar.classList.remove('tmt-avatar--in'); }, 700);
-    }, 500);
+      setTimeout(function(){ avatar.classList.remove('tmt-avatar--in'); }, 750);
+    }, 550);
     renderPills();
     if (!fromAuto) startAuto();
   }
