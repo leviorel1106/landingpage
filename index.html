@@ -575,12 +575,12 @@
       filter: drop-shadow(0 -12px 32px rgba(139,92,246,0.32));
     }
     .tmt-avatar-wrap { position: absolute; top: -70px; left: 50%; transform: translateX(-50%); cursor: pointer; z-index: 10; }
-    .tmt-avatar { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: none; box-shadow: 0 0 0 4px rgba(255,255,255,0.95), 0 0 0 8px rgba(242,167,176,0.55), 0 12px 40px rgba(61,26,74,0.25), 0 0 40px rgba(224,208,245,0.5); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s; display: block; }
-    .tmt-avatar-wrap:hover .tmt-avatar { transform: scale(1.06); box-shadow: 0 0 0 4px rgba(255,255,255,0.95), 0 0 0 10px rgba(242,167,176,0.7), 0 16px 50px rgba(61,26,74,0.3), 0 0 60px rgba(242,167,176,0.5); }
-    @keyframes tmtIn  { from{opacity:0;transform:translateX(90px) scale(0.82)} to{opacity:1;transform:none} }
-    @keyframes tmtOut { from{opacity:1;transform:none} to{opacity:0;transform:translateX(-90px) scale(0.82)} }
-    .tmt-avatar--in  { animation: tmtIn  0.55s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-    .tmt-avatar--out { animation: tmtOut 0.38s ease-in forwards; }
+    .tmt-avatar { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: none; box-shadow: 0 0 0 3px rgba(242,167,176,0.7), 0 0 28px rgba(242,167,176,0.55), 0 0 60px rgba(196,168,250,0.45), 0 12px 36px rgba(61,26,74,0.28); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s; display: block; }
+    .tmt-avatar-wrap:hover .tmt-avatar { transform: scale(1.06); box-shadow: 0 0 0 4px rgba(242,167,176,0.9), 0 0 36px rgba(242,167,176,0.7), 0 0 80px rgba(196,168,250,0.55), 0 14px 44px rgba(61,26,74,0.35); }
+    @keyframes tmtIn  { from{opacity:0;transform:translateX(140px)} to{opacity:1;transform:none} }
+    @keyframes tmtOut { from{opacity:1;transform:none} to{opacity:0;transform:translateX(-140px)} }
+    .tmt-avatar--in  { animation: tmtIn  0.65s cubic-bezier(0.25,0.1,0.25,1) forwards; }
+    .tmt-avatar--out { animation: tmtOut 0.45s cubic-bezier(0.55,0,1,0.45) forwards; }
     .tmt-bubble { position: absolute; bottom: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(10px); width: min(300px, 88vw); background: var(--white); border-radius: 18px; padding: 18px 20px 14px; box-shadow: 0 14px 48px rgba(61,26,74,0.16), 0 4px 16px rgba(61,26,74,0.08); border: 1.5px solid var(--rose-lt); text-align: right; direction: rtl; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
     .tmt-bubble.on { opacity: 1; transform: translateX(-50%) translateY(0); }
     .tmt-bubble-text { font-size: .82rem; color: var(--text-dark); line-height: 1.65; min-height: 88px; white-space: pre-wrap; }
@@ -1832,7 +1832,7 @@
   if(!wrap) return;
   var active=0,autoT=null,typeT=null;
   function renderPills(){pills.innerHTML=DATA.map(function(d,i){return'<button class="tmt-pill'+(i===active?' on':'')+'" data-i="'+i+'">'+d.name+'</button>';}).join('');pills.querySelectorAll('.tmt-pill').forEach(function(b){b.addEventListener('click',function(){goTo(+b.dataset.i,false);});});}
-  function goTo(idx,fromAuto){hideBubble();active=(idx+DATA.length)%DATA.length;avatar.classList.add('tmt-avatar--out');setTimeout(function(){avatar.src=DATA[active].img;avatar.alt=DATA[active].name;avatar.classList.remove('tmt-avatar--out');avatar.classList.add('tmt-avatar--in');setTimeout(function(){avatar.classList.remove('tmt-avatar--in');},600);},360);renderPills();if(!fromAuto)startAuto();}
+  function goTo(idx,fromAuto){hideBubble();active=(idx+DATA.length)%DATA.length;avatar.classList.add('tmt-avatar--out');setTimeout(function(){avatar.src=DATA[active].img;avatar.alt=DATA[active].name;avatar.classList.remove('tmt-avatar--out');avatar.classList.add('tmt-avatar--in');setTimeout(function(){avatar.classList.remove('tmt-avatar--in');},700);},500);renderPills();if(!fromAuto)startAuto();}
   function startAuto(){clearInterval(autoT);autoT=setInterval(function(){goTo(active+1,true);},6000);}
   function pauseAuto(){clearInterval(autoT);autoT=null;}
   function resumeAuto(){if(!autoT)startAuto();}
