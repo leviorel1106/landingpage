@@ -590,7 +590,6 @@
       top: -70px; left: 50%; transform: translateX(-50%);
       width: 140px; height: 140px;
       border-radius: 50%;
-      overflow: hidden;
       cursor: pointer; z-index: 10;
     }
     .tmt-avatar-wrap::after {
@@ -605,6 +604,7 @@
     .tmt-avatar {
       width: 140px; height: 140px; border-radius: 50%;
       object-fit: cover; object-position: center;
+      clip-path: circle(50%);
       border: none;
       box-shadow:
         0 0 20px rgba(242,167,176,0.6),
@@ -679,7 +679,7 @@
 
     @media (max-width: 600px) {
       .tmt-avatar { width: 116px; height: 116px; }
-      .tmt-avatar-wrap { top: -58px; width: 116px; height: 116px; border-radius: 50%; overflow: hidden; }
+      .tmt-avatar-wrap { top: -58px; width: 116px; height: 116px; border-radius: 50%; }
       .tmt-orb { overflow: visible; }
       .tmt-bubble { width: 94vw; }
     }
