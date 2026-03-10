@@ -1953,11 +1953,11 @@
 
   function isMobile() { return window.matchMedia('(max-width:640px)').matches; }
 
-  // כפה הצגת frame ראשון
+  // כפה הצגת frame ראשון (play+pause מיידי — עובד על iOS)
   cells.forEach(function(cell) {
     var vid = cell.querySelector('video');
-    vid.addEventListener('loadeddata', function() {
-      if (vid.currentTime === 0) vid.currentTime = 0.001;
+    vid.addEventListener('canplay', function() {
+      vid.play().then(function() { vid.pause(); }).catch(function(){});
     }, { once: true });
   });
 
