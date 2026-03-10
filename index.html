@@ -1777,7 +1777,7 @@
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') exitShown = true; });
 
   // ─── Form ────────────────────────────────────────────────────────────
-  const WEBHOOK = 'WEBHOOK_PLACEHOLDER';
+  const WEBHOOK = 'https://hook.us2.make.com/1008gef18vuksep1csa1ekq1thbdpfua';
   document.getElementById('contact-form').addEventListener('submit', async e => {
     e.preventDefault();
     const form = e.target, btn = form.querySelector('.f-submit'), fd = new FormData(form);
