@@ -925,6 +925,59 @@
       .breed-grid { grid-template-columns: repeat(2, 1fr); }
       .gal-grid { gap: 10px; grid-auto-rows: 170px; }
     }
+
+    /* ─── Problems / Behavior Grid ───────────────────────────────────────── */
+    #problems {
+      background: var(--plum);
+      padding: 80px 24px 100px;
+      position: relative;
+    }
+    .problems-in { max-width: var(--wrap); margin: 0 auto; }
+    .prob-grid {
+      display: grid;
+      grid-template-rows: var(--pr0,4fr) var(--pr1,4fr) var(--pr2,4fr);
+      grid-template-columns: var(--pc0,4fr) var(--pc1,4fr) var(--pc2,4fr);
+      gap: 5px;
+      transition: grid-template-rows 0.4s ease, grid-template-columns 0.4s ease;
+      aspect-ratio: 1;
+      max-width: 900px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 48px auto 0;
+    }
+    .prob-cell {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--plum-dk);
+    }
+    .prob-cell video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .prob-cell:hover video { transform: scale(1.04); }
+    .prob-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.12) 45%, transparent 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .prob-label {
+      position: absolute; bottom: 12px; right: 12px; left: 12px;
+      font-family: var(--font); font-weight: 700;
+      font-size: clamp(0.62rem, 1.1vw, 0.95rem);
+      color: #fff; text-align: right; direction: rtl;
+      pointer-events: none; z-index: 2;
+    }
+    @media (max-width: 640px) {
+      .prob-grid {
+        height: auto;
+        grid-template-rows: 1fr 1fr 1fr !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+      }
+      .prob-cell { aspect-ratio: 1; }
+      .prob-label { font-size: 0.58rem; bottom: 6px; right: 6px; left: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -1028,10 +1081,86 @@
   </div>
 </section>
 
-<!-- ─── Wave: Breeds → Testimonials ──────────────────────────────────── -->
-<div class="wave" style="background:var(--cream)">
+<!-- ─── Wave: Breeds → Problems ──────────────────────────────────────── -->
+<div class="wave" style="background:var(--sand)">
   <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#F5E4CC"/>
+    <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#3D1A4A"/>
+  </svg>
+</div>
+
+<!-- ─── Problems / Behavior Grid ─────────────────────────────────────── -->
+<section id="problems">
+  <div class="problems-in">
+    <div class="s-head rv">
+      <div class="s-eyebrow s-eyebrow--white">בעיות התנהגות נפוצות</div>
+      <h2 class="s-title s-title--white">אם יש לכם פודל, בוודאי אתם מתמודדים עם...</h2>
+      <div class="s-accent-line s-accent-line--mint"></div>
+    </div>
+
+    <div class="prob-grid" id="prob-grid">
+
+      <div class="prob-cell" data-row="0" data-col="0">
+        <video src="בעיות התנהגות/סרטונים/רכושנות.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">רכושנות</div>
+      </div>
+
+      <div class="prob-cell" data-row="0" data-col="1">
+        <video src="בעיות התנהגות/סרטונים/ריאקטיביות.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">ריאקטיביות</div>
+      </div>
+
+      <div class="prob-cell" data-row="0" data-col="2">
+        <video src="בעיות התנהגות/סרטונים/קפיצות על אנשים.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">קפיצות על אנשים</div>
+      </div>
+
+      <div class="prob-cell" data-row="1" data-col="0">
+        <video src="בעיות התנהגות/סרטונים/משמעת בסיסית ומתקדמת .mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">משמעת בסיסית</div>
+      </div>
+
+      <div class="prob-cell" data-row="1" data-col="1">
+        <video src="בעיות התנהגות/סרטונים/משיכות ברצועה.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">משיכות ברצועה</div>
+      </div>
+
+      <div class="prob-cell" data-row="1" data-col="2">
+        <video src="בעיות התנהגות/סרטונים/טיפוח וסירוק.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">טיפוח וסירוק</div>
+      </div>
+
+      <div class="prob-cell" data-row="2" data-col="0">
+        <video src="בעיות התנהגות/סרטונים/חרדת נטישה.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">חרדת נטישה</div>
+      </div>
+
+      <div class="prob-cell" data-row="2" data-col="1">
+        <video src="בעיות התנהגות/סרטונים/גור חדש.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">גור חדש</div>
+      </div>
+
+      <div class="prob-cell" data-row="2" data-col="2">
+        <video src="בעיות התנהגות/סרטונים/נביחות.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="prob-overlay"></div>
+        <div class="prob-label">נביחות</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Wave: Problems → Testimonials ────────────────────────────────── -->
+<div class="wave" style="background:var(--plum)">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#FFF8F0"/>
   </svg>
 </div>
 <!-- ─── Testimonials ──────────────────────────────────────────────────── -->
@@ -1815,6 +1944,44 @@
 
   window.addEventListener('resize', function() { setup(); update(); }, { passive: true });
   window.addEventListener('scroll', update, { passive: true });
+})();
+</script>
+
+<script>
+// ─── Problems Grid ────────────────────────────────────────────────────
+(function () {
+  var grid = document.getElementById('prob-grid');
+  if (!grid) return;
+  var cells = grid.querySelectorAll('.prob-cell');
+  var HOVER = 6, REST = (12 - HOVER) / 2;
+
+  function setGrid(row, col) {
+    [0,1,2].forEach(function(r) {
+      grid.style.setProperty('--pr' + r, (r === row ? HOVER : REST) + 'fr');
+    });
+    [0,1,2].forEach(function(c) {
+      grid.style.setProperty('--pc' + c, (c === col ? HOVER : REST) + 'fr');
+    });
+  }
+
+  function resetGrid() {
+    [0,1,2].forEach(function(r) { grid.style.setProperty('--pr' + r, '4fr'); });
+    [0,1,2].forEach(function(c) { grid.style.setProperty('--pc' + c, '4fr'); });
+  }
+
+  cells.forEach(function(cell) {
+    var row = +cell.dataset.row;
+    var col = +cell.dataset.col;
+    var vid = cell.querySelector('video');
+
+    function enter() { setGrid(row, col); vid.play(); }
+    function leave() { resetGrid(); vid.pause(); vid.currentTime = 0; }
+
+    cell.addEventListener('mouseenter', enter);
+    cell.addEventListener('mouseleave', leave);
+    cell.addEventListener('touchstart', function(e) { e.preventDefault(); enter(); }, { passive: false });
+    cell.addEventListener('touchend', leave);
+  });
 })();
 </script>
 
