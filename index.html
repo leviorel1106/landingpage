@@ -698,7 +698,7 @@
 
     /* ─── GALLERY ────────────────────────────────────────────── */
     /* ─── TRAINER ────────────────────────────────────────────── */
-    #trainer { padding: var(--pad) 24px; background: var(--sand); position: relative; }
+    #trainer { padding: clamp(36px, 5vw, 60px) 24px var(--pad); background: var(--sand); position: relative; }
     .tr-in {
       max-width: var(--wrap); margin: 0 auto;
       display: grid; grid-template-columns: 360px 1fr;
@@ -901,6 +901,7 @@
       .breed-grid { grid-template-columns: repeat(2, 1fr); }
       .why-grid { grid-template-columns: repeat(2, 1fr); }
       .tr-in { grid-template-columns: 1fr; }
+      .tr-img-wrap { order: 2; width: min(280px, 80vw); margin: 0 auto; }
       .tr-img-ph { max-width: 300px; margin: 0 auto; }
       .tr-body { grid-template-columns: 1fr; gap: 32px; }
       .htl-grid { grid-template-columns: repeat(2, 1fr); }
