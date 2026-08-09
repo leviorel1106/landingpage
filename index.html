@@ -721,28 +721,88 @@
         radial-gradient(ellipse at 10% 80%, rgba(255,90,95,0.08) 0%, transparent 50%);
     }
     .tracks-in { max-width: var(--wrap); margin: 0 auto; position: relative; z-index: 1; }
-    .tr-toggle {
-      display: inline-flex;
-      background: rgba(255,255,255,0.08);
-      border-radius: var(--r-pill); padding: 5px;
-      margin: 44px 0 36px;
+    .trk-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; align-items: stretch;
+      margin-top: 44px;
+    }
+    .trk-card {
+      display: flex; flex-direction: column;
+      background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--r);
+      padding: 36px 32px;
+      position: relative; overflow: hidden;
     }
-    .tr-btn {
-      padding: 12px 36px; border-radius: var(--r-pill);
-      font-size: .98rem; font-weight: 700;
-      color: rgba(255,255,255,0.5);
-      transition: var(--t-f); font-family: var(--font);
+    .trk-card--feat {
+      background: rgba(255,255,255,0.10);
+      border: 1.5px solid rgba(255,90,95,0.35);
+      box-shadow: 0 16px 48px rgba(255,90,95,0.14);
     }
-    .tr-btn.on {
+    .trk-card--feat::before {
+      content: ''; position: absolute; top: 0; inset-inline: 0; height: 3px;
       background: var(--coral);
-      color: var(--white);
-      box-shadow: var(--sh-coral);
     }
-    .tr-panel { display: none; }
-    .tr-panel.on { display: block; animation: fadeUp .3s ease; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    .tr-body { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .trk-badge {
+      align-self: flex-start;
+      background: var(--coral); color: var(--white);
+      border-radius: var(--r-pill);
+      padding: 6px 16px;
+      font-size: .76rem; font-weight: 700; letter-spacing: .06em;
+      box-shadow: var(--sh-coral);
+      margin-bottom: 16px;
+    }
+    .trk-name { font-size: 1.45rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .trk-kicker { font-size: .9rem; font-weight: 700; color: var(--mint); letter-spacing: .04em; margin-bottom: 14px; }
+    .trk-desc { font-size: .93rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 8px; }
+    .trk-fit {
+      font-size: .88rem; color: rgba(255,255,255,0.6); line-height: 1.65;
+      padding: 14px 16px; background: rgba(255,90,95,0.10);
+      border-radius: var(--r-sm); border-inline-start: 3px solid var(--coral);
+      margin-top: auto;
+    }
+    .trk-cta { width: 100%; margin-top: 18px; }
+
+    .trk-strip {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 28px; margin-top: 24px;
+      padding: 28px 32px; border-radius: var(--r);
+      background: rgba(143,232,196,0.07);
+      border: 1px solid rgba(143,232,196,0.22);
+    }
+    .trk-strip h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .trk-strip p { font-size: .9rem; color: rgba(255,255,255,0.65); line-height: 1.65; }
+    .trk-strip p + p { margin-top: 6px; }
+    .trk-strip .btn { flex-shrink: 0; padding: 14px 30px; font-size: .95rem; }
+
+    .trk-know {
+      margin-top: 24px; padding: 32px; border-radius: var(--r);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .trk-know h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .trk-know-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 44px; }
+    .trk-know-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0;
+      font-size: .92rem; color: rgba(255,255,255,0.65); line-height: 1.6;
+    }
+    .trk-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--mint); flex-shrink: 0; margin-top: 8px;
+    }
+
+    .trk-diag {
+      margin-top: 24px; padding: 36px 32px; border-radius: var(--r);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+    }
+    .trk-diag h3 { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .trk-diag p { font-size: .93rem; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 640px; margin: 0 auto; }
+    .trk-diag p + p { margin-top: 8px; }
+    .trk-diag .btn { margin-top: 26px; }
+
     .tr-list { list-style: none; }
     .tr-list li {
       display: flex; align-items: flex-start; gap: 14px;
@@ -758,25 +818,6 @@
       flex-shrink: 0; margin-top: 2px;
     }
     .tr-chk svg { width: 11px; height: 11px; color: var(--coral); }
-    .tr-box {
-      background: rgba(255,255,255,0.08);
-      border-radius: var(--r);
-      padding: 40px 36px;
-      border: 1px solid rgba(255,255,255,0.12);
-      position: relative; overflow: hidden;
-    }
-    .tr-box::before {
-      content: ''; position: absolute; top: 0; inset-inline: 0; height: 3px;
-      background: var(--coral);
-    }
-    .tr-box h3 { font-size: 1.35rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-    .tr-box > p { font-size: .93rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 16px; }
-    .tr-note {
-      font-size: .88rem; color: rgba(255,255,255,0.6); line-height: 1.65;
-      padding: 14px 16px; background: rgba(255,90,95,0.1);
-      border-radius: var(--r-sm); border-inline-start: 3px solid var(--coral);
-      margin: 18px 0 26px;
-    }
 
     /* ─── GALLERY ────────────────────────────────────────────── */
     /* ─── TRAINER ────────────────────────────────────────────── */
@@ -983,7 +1024,7 @@
       .why-grid { grid-template-columns: repeat(2, 1fr); }
       .tr-in { grid-template-columns: 1fr; }
       .tr-img-ph { max-width: 300px; margin: 0 auto; }
-      .tr-body { grid-template-columns: 1fr; gap: 32px; }
+      .trk-grid { grid-template-columns: 1fr; gap: 20px; }
       .htl-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
@@ -1000,6 +1041,12 @@
       .gi--tall { grid-row: span 1; }
       .why-grid { grid-template-columns: 1fr; }
       .p-box { padding: 36px 24px; }
+      .trk-card { padding: 28px 22px; }
+      .trk-strip { flex-direction: column; align-items: stretch; text-align: right; gap: 20px; padding: 26px 22px; }
+      .trk-strip .btn { width: 100%; }
+      .trk-know { padding: 24px 20px; }
+      .trk-know-list { grid-template-columns: 1fr; gap: 0; }
+      .trk-diag { padding: 28px 22px; }
     }
     @media (max-width: 480px) {
       .hero-brand { font-size: 4.5rem; }
@@ -1331,12 +1378,12 @@
   <div class="ticker-track">
     <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
     <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>מסלול בסיס · מסלול מתקדם</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול CLUB · מסלול SOLO</span>
     <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
     <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
     <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
     <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>מסלול בסיס · מסלול מתקדם</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול CLUB · מסלול SOLO</span>
     <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
     <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
   </div>
@@ -1507,48 +1554,71 @@
       <div class="s-eyebrow s-eyebrow--white">מסלולים</div>
       <h2 class="s-title s-title--white">המסלולים שלנו</h2>
       <div class="s-accent-line s-accent-line--mint"></div>
-      <p class="s-sub s-sub--white">בחרו את המסלול המתאים לכם ולכלב שלכם</p>
+      <p class="s-sub s-sub--white">בוחרים את התהליך שמתאים לכלב, למטרות ולקצב שלכם.</p>
     </div>
-    <div class="tr-toggle">
-      <button class="tr-btn on" data-track="basis">מסלול בסיס</button>
-      <button class="tr-btn" data-track="advanced">מסלול מתקדם</button>
-    </div>
-    <div class="tr-panel on" data-track="basis">
-      <div class="tr-body">
+
+    <div class="trk-grid">
+      <!-- CLUB -->
+      <article class="trk-card trk-card--feat rv">
+        <span class="trk-badge">המסלול המומלץ</span>
+        <h3 class="trk-name">מסלול CLUB</h3>
+        <div class="trk-kicker">פרטני + קבוצתי</div>
+        <p class="trk-desc">תהליך שמתחיל בעבודה אישית בבית וממשיך לתרגול בסביבה עם גירויים.</p>
         <ul class="tr-list">
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 פגישות קבוצתיות שבועיות</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>4 מפגשי חניכה אישיים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>פקודות בסיס: שב, שכב, עצור, בוא</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>כלים לניהול אנרגיה ועוררות</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>גישה לקבוצת הוואטסאפ התומכת</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>חומרי לימוד דיגיטליים בסיסיים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים פרטניים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים קבוצתיים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>חברות בקהילת Poodle Club</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>מפגש בוגרים</li>
         </ul>
-        <div class="tr-box">
-          <h3>מסלול בסיס — 6 + 4</h3>
-          <p>מתאים לגורים ולכלבים שמתחילים את דרכם. ביסוס שגרה ברורה ומתן כלים לטווח ארוך.</p>
-          <div class="tr-note">המחיר נקבע בשיחת התאמה אישית לפי הכלב והמטרות שלכם</div>
-          <a href="#contact" class="btn btn-coral" style="width:100%;">בדקו התאמה</a>
-        </div>
-      </div>
-    </div>
-    <div class="tr-panel" data-track="advanced">
-      <div class="tr-body">
+        <div class="trk-fit">מתאים למי שרוצה לבנות את היסודות בצורה אישית ואז לתרגל אותם גם מול כלבים, אנשים וגירויים.</div>
+        <a href="#contact" class="btn btn-coral trk-cta">בדקו התאמה</a>
+      </article>
+
+      <!-- SOLO -->
+      <article class="trk-card rv" style="transition-delay:.08s">
+        <h3 class="trk-name">מסלול SOLO</h3>
+        <div class="trk-kicker">פרטני בלבד</div>
+        <p class="trk-desc">תהליך אישי אחד על אחד, בהתאם לכלב ולקשיים שאיתם אתם מתמודדים.</p>
         <ul class="tr-list">
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>8 פגישות קבוצתיות שבועיות</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>4 מפגשי חניכה אישיים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תכנית בית מותאמת אישית לכלב</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>פקודות מתקדמות ואתגרים קוגניטיביים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>עבודה על מצבי דחק וסביבות חדשות</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>כניסה למפגשי הבוגרים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ספריית סרטונים + חומרי לימוד מורחבים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>10 מפגשים פרטניים</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
+          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
         </ul>
-        <div class="tr-box">
-          <h3>מסלול מתקדם — 8 + 4</h3>
-          <p>מתאים לפודלים שעברו בסיס, לכלבים עם אנרגיה גבוהה, או לכאלה שרוצים לדחוף את הגבולות.</p>
-          <div class="tr-note">המחיר נקבע בשיחת התאמה אישית לפי הכלב והמטרות שלכם</div>
-          <a href="#contact" class="btn btn-coral" style="width:100%;">בדקו התאמה</a>
-        </div>
+        <div class="trk-fit">מתאים למי שמעדיף תהליך פרטני בלבד, גר מחוץ לאזור הפעילות של הקבוצה או לכלב שעבודה קבוצתית עדיין אינה מתאימה לו.</div>
+        <a href="#contact" class="btn btn-coral trk-cta">בדקו התאמה</a>
+      </article>
+    </div>
+
+    <!-- אפשרות להתחיל ב-6 מפגשים פרטניים -->
+    <div class="trk-strip rv">
+      <div>
+        <h3>רוצים להתחיל קודם בפרטני?</h3>
+        <p>אפשר להתחיל בתהליך של 6 מפגשים פרטניים ורק לאחר מכן להחליט אם להמשיך גם לשלב הקבוצתי.</p>
+        <p>אם הכלב מתאים לעבודה בקבוצה, ניתן להוסיף בהמשך 6 מפגשים קבוצתיים.</p>
       </div>
+      <a href="#contact" class="btn btn-out-white">בדקו מה מתאים לכם</a>
+    </div>
+
+    <!-- חשוב לדעת -->
+    <div class="trk-know rv">
+      <h3>חשוב לדעת</h3>
+      <ul class="trk-know-list">
+        <li><span class="trk-dot"></span>לא ניתן להצטרף למפגשים קבוצתיים בלבד כלקוח חדש</li>
+        <li><span class="trk-dot"></span>המפגשים הקבוצתיים הם שלב המשך לאחר עבודה פרטנית</li>
+        <li><span class="trk-dot"></span>ההצטרפות לקבוצה נעשית בהתאם להתאמת הכלב ולמקום פנוי</li>
+        <li><span class="trk-dot"></span>בוגרי התהליך יכולים להמשיך להגיע למפגשים קבוצתיים במסגרת כרטיסיית המשך</li>
+        <li><span class="trk-dot"></span>כרטיסיית ההמשך כוללת 4 מפגשים ותקפה ל-4 חודשים</li>
+      </ul>
+    </div>
+
+    <!-- פגישת האבחון -->
+    <div class="trk-diag rv">
+      <h3>התהליך מתחיל באבחון</h3>
+      <p>לאחר שיחת ההתאמה קובעים פגישת אבחון בבית. באבחון מכירים את הכלב, ממפים את הקשיים ובונים את כיוון העבודה.</p>
+      <p>התשלום על האבחון מתבצע מראש לצורך שריון המועד, ואם ממשיכים למסלול - מלוא הסכום מתקזז ממחיר החבילה.</p>
+      <a href="#contact" class="btn btn-coral">קבעו שיחת התאמה</a>
     </div>
   </div>
 </section>
@@ -1571,8 +1641,8 @@
     </div>
     <div class="faq-list">
       <div class="faq-item rv">
-        <button class="faq-q" aria-expanded="false">מה ההבדל בין מסלול בסיס למתקדם?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">מסלול הבסיס (6+4) מתאים לגורים ולכלבים שמתחילים. הוא מכסה פקודות יסוד, שגרה ותקשורת בסיסית. מסלול מתקדם (8+4) כולל תכנית בית אישית, עבודה על מצבים מורכבים ופקודות ברמה גבוהה - מתאים לפודלים שסיימו בסיס או לכאלה עם ניסיון קודם.</div></div>
+        <button class="faq-q" aria-expanded="false">מה ההבדל בין מסלול CLUB למסלול SOLO?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-in">מסלול CLUB משלב 6 מפגשים פרטניים ו-6 מפגשים קבוצתיים - מתחילים בעבודה אישית בבית וממשיכים לתרגול בסביבה עם גירויים. מסלול SOLO הוא 10 מפגשים פרטניים בלבד, ומתאים למי שמעדיף תהליך אישי, גר מחוץ לאזור הפעילות של הקבוצה או לכלב שעבודה קבוצתית עדיין אינה מתאימה לו.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.05s">
         <button class="faq-q" aria-expanded="false">מאיזה גיל ניתן להתחיל?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
@@ -1584,7 +1654,7 @@
       </div>
       <div class="faq-item rv" style="transition-delay:.15s">
         <button class="faq-q" aria-expanded="false">האם המסלול מתאים לכלב שכבר עשה אימון?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">בהחלט. כלבים שעשו אימון קודם יכולים להצטרף ישירות למסלול המתקדם. בשיחת ההתאמה נבדוק יחד מהי הרמה המתאימה - לא נרצה שהכלב שלכם ישעמם.</div></div>
+        <div class="faq-a"><div class="faq-a-in">בהחלט. בשיחת ההתאמה ובפגישת האבחון ממפים מה הכלב כבר יודע ומה עדיין חסר, ומשם נקבע כיוון העבודה ונקודת הפתיחה של התהליך.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.2s">
         <button class="faq-q" aria-expanded="false">איך נקבע המחיר?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
@@ -1708,17 +1778,6 @@
         ans.style.maxHeight = ans.scrollHeight + 'px';
         btn.setAttribute('aria-expanded', 'true');
       }
-    });
-  });
-
-  // ─── Track Toggle ────────────────────────────────────────────────────
-  document.querySelectorAll('.tr-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const t = btn.dataset.track;
-      document.querySelectorAll('.tr-btn').forEach(b => b.classList.remove('on'));
-      document.querySelectorAll('.tr-panel').forEach(p => p.classList.remove('on'));
-      btn.classList.add('on');
-      document.querySelector(`.tr-panel[data-track="${t}"]`).classList.add('on');
     });
   });
 
