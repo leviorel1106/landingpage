@@ -20,3 +20,11 @@ profile pic.jpg
 # OS
 .DS_Store
 Thumbs.db
+.env
+
+# Pages that must NOT be served from poodleclub.co.il
+landing.html
+oreldogtrainer.html
+senthera.html
+senthera-landing-new.html
+leash-training.html
