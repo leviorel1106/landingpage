@@ -1,0 +1,156 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Accessibility layer — shared by every page on poodleclub.co.il
+   Skip link · focus indicators · reduced motion · accessibility widget
+   Expects these custom properties on :root —
+   --plum --white --cream --cream-2 --text-dark --text-mid --coral-dk
+   --coral-text --mint --mint-lt --font --r --r-sm --r-pill --t-f --t-spring
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Skip link (WCAG 2.4.1) ─────────────────────────────────────────── */
+.skip-link {
+  position: absolute; inset-inline-start: 16px; top: -100px;
+  z-index: 2000;
+  background: var(--plum); color: var(--white);
+  padding: 12px 24px; border-radius: var(--r-sm);
+  font-weight: 700; font-size: 1rem;
+  transition: top .18s ease;
+}
+.skip-link:focus { top: 16px; }
+
+/* ─── Focus indicator (WCAG 2.4.7) ───────────────────────────────────
+   --coral-dk holds >=3:1 against every surface used on the site:
+   cream 4.06 · sand 3.43 · white 4.27 · plum 3.40 · plum-dk 4.11        */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--coral-dk);
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ─── Reduced motion (WCAG 2.2.2 / 2.3.1) ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+html.no-motion { scroll-behavior: auto; }
+html.no-motion *, html.no-motion *::before, html.no-motion *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
+}
+html.no-motion .rv, html.no-motion .rv-left, html.no-motion .rv-right {
+  opacity: 1 !important; transform: none !important;
+}
+
+/* ─── Widget ─────────────────────────────────────────────────────────── */
+#a11y-btn {
+  position: fixed; inset-inline-end: 20px; bottom: 20px; z-index: 1500;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--plum); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(61,26,74,.34);
+  border: 2px solid var(--white); cursor: pointer;
+  transition: transform var(--t-spring, .45s cubic-bezier(.34,1.56,.64,1));
+}
+#a11y-btn:hover { transform: scale(1.08); }
+#a11y-btn svg { width: 28px; height: 28px; }
+
+#a11y-panel {
+  position: fixed; inset-inline-end: 20px; bottom: 86px; z-index: 1500;
+  width: min(310px, calc(100vw - 40px));
+  background: var(--white); color: var(--text-dark);
+  border-radius: var(--r); border: 1.5px solid rgba(61,26,74,.14);
+  box-shadow: 0 20px 60px rgba(61,26,74,.26);
+  padding: 18px; display: none; text-align: right;
+}
+#a11y-panel[data-open="1"] { display: block; }
+#a11y-panel h2 { font-size: 1rem; font-weight: 800; color: var(--plum); margin-bottom: 4px; }
+#a11y-panel .a11y-hint { font-size: .78rem; color: var(--text-mid); margin-bottom: 14px; line-height: 1.55; }
+
+.a11y-opt {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 11px 12px; margin-bottom: 7px;
+  border-radius: var(--r-sm); border: 1.5px solid rgba(61,26,74,.14);
+  background: var(--cream); color: var(--text-dark);
+  font-family: var(--font); font-size: .9rem; font-weight: 600;
+  text-align: start; cursor: pointer;
+}
+.a11y-opt:hover { border-color: var(--plum); background: var(--cream-2); }
+.a11y-opt[aria-pressed="true"] { background: var(--plum); color: var(--white); border-color: var(--plum); }
+.a11y-opt .a11y-state { margin-inline-start: auto; font-size: .74rem; opacity: .85; font-weight: 700; }
+#a11y-reset { justify-content: center; background: none; border-style: dashed; }
+
+#a11y-panel .a11y-link {
+  display: block; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid rgba(61,26,74,.12);
+  font-size: .84rem; font-weight: 700; color: var(--coral-text);
+}
+#a11y-panel .a11y-link:hover { text-decoration: underline; }
+
+/* ─── User preferences ───────────────────────────────────────────────── */
+/* the pages are sized in rem, so the root size scales everything */
+html.a11y-fs1 { font-size: 17.6px; }
+html.a11y-fs2 { font-size: 19.2px; }
+html.a11y-fs3 { font-size: 20.8px; }
+
+html.a11y-links a:not(.btn):not(.skip-link):not(#a11y-btn) {
+  text-decoration: underline !important; text-underline-offset: 3px;
+  font-weight: 700 !important;
+}
+html.a11y-links a.btn { outline: 2px dashed currentColor; outline-offset: 3px; }
+
+html.a11y-font, html.a11y-font body, html.a11y-font * {
+  font-family: Arial, "Segoe UI", sans-serif !important;
+  letter-spacing: .02em !important;
+  word-spacing: .08em !important;
+}
+
+html.a11y-contrast body,
+html.a11y-contrast section,
+html.a11y-contrast footer,
+html.a11y-contrast header,
+html.a11y-contrast #nav,
+html.a11y-contrast .p-box,
+html.a11y-contrast #a11y-panel { background: #000 !important; color: #fff !important; }
+html.a11y-contrast #hero::before,
+html.a11y-contrast #hero-grad-bg,
+html.a11y-contrast .wave,
+html.a11y-contrast .ticker,
+html.a11y-contrast #orbit-ring { display: none !important; }
+html.a11y-contrast *:not(#a11y-btn):not(#a11y-btn *) {
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+html.a11y-contrast .btn,
+html.a11y-contrast button:not(#a11y-btn),
+html.a11y-contrast .a11y-opt {
+  background: #000 !important; color: #ff0 !important; border: 2px solid #ff0 !important;
+}
+html.a11y-contrast a { color: #ff0 !important; text-decoration: underline !important; }
+html.a11y-contrast img, html.a11y-contrast canvas { filter: grayscale(1) contrast(1.25); }
+html.a11y-contrast input, html.a11y-contrast select {
+  background: #000 !important; color: #fff !important; border: 2px solid #fff !important;
+}
+html.a11y-contrast ::placeholder { color: #ddd !important; }
+html.a11y-contrast #a11y-btn { background: #000 !important; color: #ff0 !important; border-color: #ff0 !important; }
+
+@media (max-width: 480px) {
+  #a11y-btn { width: 48px; height: 48px; bottom: 14px; inset-inline-end: 14px; }
+  #a11y-panel { bottom: 74px; inset-inline-end: 14px; }
+}

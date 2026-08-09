@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="a11y.css">
   <style>
     /* ─── Variables ──────────────────────────────────────────── */
     :root {
@@ -19,8 +19,10 @@
       --rose:       #F2A7B0;
       --rose-lt:    #FCDDE0;
       --rose-dk:    #E07888;
-      --coral:      #FF5A5F;
+      --coral:      #FF5A5F;   /* accents & graphics only */
       --coral-dk:   #E03D42;
+      --coral-btn:  #CC484C;   /* white text on it = 4.57 (WCAG AA) */
+      --coral-text: #BA4245;   /* on the tinted eyebrow pill = 4.53, on cream = 5.04 */
       --plum:       #3D1A4A;
       --plum-dk:    #280D33;
       --plum-lt:    #5A2870;
@@ -58,175 +60,18 @@
     button { cursor: pointer; border: none; background: none; font-family: var(--font); }
     section[id] { scroll-margin-top: 80px; }
 
-    /* ─── Wave Dividers ──────────────────────────────────────── */
-    .wave {
-      display: block;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      margin: 0;
-      padding: 0;
+    /* Focus ring, skip link, sr-only and reduced-motion live in a11y.css.
+       These sections sit on dark surfaces and need the light ring instead. */
+    #hero a:focus-visible, #hero button:focus-visible,
+    #why a:focus-visible, #why button:focus-visible,
+    #how a:focus-visible, #how button:focus-visible,
+    #tracks a:focus-visible, #tracks button:focus-visible,
+    #contact a:focus-visible, #contact button:focus-visible,
+    #contact input:focus-visible, #contact select:focus-visible,
+    .popup a:focus-visible, .popup button:focus-visible,
+    footer a:focus-visible {
+      outline-color: var(--white);
     }
-    .wave svg {
-      display: block;
-      width: 100%;
-      height: 60px;
-    }
-    @media (max-width: 768px) {
-      .wave svg { height: 36px; }
-    }
-
-    /* ─── Marquee Ticker ─────────────────────────────────────── */
-    .ticker {
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 16px 0;
-    }
-    .ticker--mint  { background: var(--mint); }
-    .ticker--coral { background: var(--coral); }
-    .ticker--rose  { background: var(--rose); }
-    .ticker-track {
-      display: inline-flex;
-      align-items: center;
-      gap: 0;
-      animation: tickerScroll 22s linear infinite;
-      will-change: transform;
-    }
-    .ticker-item {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 0 40px;
-      font-size: .9rem; font-weight: 700;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--plum);
-      white-space: nowrap;
-    }
-    .ticker--coral .ticker-item { color: var(--white); }
-    .ticker-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.5; flex-shrink: 0; }
-    @keyframes tickerScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ─── Stripe Bar ─────────────────────────────────────────── */
-    .stripe-bar {
-      height: 8px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--mint) 0px, var(--mint) 24px,
-        transparent 24px, transparent 48px
-      );
-      opacity: 0.7;
-    }
-
-    /* ─── Buttons ────────────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center; justify-content: center;
-      gap: 8px;
-      padding: 16px 40px;
-      border-radius: var(--r-pill);
-      font-size: 1.05rem; font-weight: 700;
-      font-family: var(--font);
-      transition: transform var(--t-spring), box-shadow var(--t), background var(--t-f);
-      will-change: transform;
-      border: none; cursor: pointer;
-      letter-spacing: 0.01em;
-    }
-    .btn-coral {
-      background: var(--coral);
-      color: var(--white);
-      box-shadow: var(--sh-coral);
-    }
-    .btn-coral:hover {
-      background: var(--coral-dk);
-      box-shadow: var(--sh-coral-lg);
-      transform: translateY(-3px) scale(1.02);
-    }
-    .btn-coral:active { transform: translateY(0) scale(1); }
-    .btn-out {
-      background: rgba(255,255,255,0.15);
-      color: var(--text-dark);
-      border: 2px solid rgba(26,10,36,0.2);
-    }
-    .btn-out:hover {
-      border-color: var(--coral);
-      color: var(--coral);
-      background: rgba(255,90,95,0.06);
-    }
-    .btn-out-white {
-      background: rgba(255,255,255,0.1);
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,0.35);
-      backdrop-filter: blur(8px);
-    }
-    .btn-out-white:hover {
-      background: rgba(255,255,255,0.2);
-      border-color: rgba(255,255,255,0.7);
-    }
-
-    /* ─── Scroll Reveal ──────────────────────────────────────── */
-    .rv {
-      opacity: 0;
-      transform: translateY(40px) scale(0.97);
-      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
-    }
-    .rv.on { opacity: 1; transform: none; }
-    .rv-left {
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
-    }
-    .rv-left.on { opacity: 1; transform: none; }
-    .rv-right {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
-    }
-    .rv-right.on { opacity: 1; transform: none; }
-
-    /* ─── Section Headings ───────────────────────────────────── */
-    .s-eyebrow {
-      display: inline-block;
-      font-size: .78rem; font-weight: 700;
-      letter-spacing: .18em; text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: var(--r-pill);
-      margin-bottom: 16px;
-      font-family: var(--font);
-    }
-    .s-eyebrow--coral { color: var(--coral); background: rgba(255,90,95,0.1); border: 1px solid rgba(255,90,95,0.25); }
-    .s-eyebrow--plum { color: var(--plum); background: rgba(61,26,74,0.08); border: 1px solid rgba(61,26,74,0.2); }
-    .s-eyebrow--white { color: var(--mint); background: rgba(143,232,196,0.12); border: 1px solid rgba(143,232,196,0.3); }
-
-    .s-title {
-      font-family: var(--font);
-      font-size: clamp(2rem, 4.5vw, 3.2rem);
-      font-weight: 900;
-      color: var(--plum);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-    .s-title--white { color: var(--white); }
-    .s-title--coral { color: var(--coral); }
-
-    .s-accent-line {
-      width: 60px; height: 4px;
-      background: var(--coral);
-      border-radius: 2px;
-      margin-top: 16px;
-    }
-    .s-accent-line--center { margin-left: auto; margin-right: auto; }
-    .s-accent-line--mint { background: var(--mint); }
-
-    .s-sub {
-      font-size: 1.05rem;
-      color: var(--text-mid);
-      font-weight: 400;
-      margin-top: 14px;
-      line-height: 1.72;
-    }
-    .s-sub--white { color: rgba(255,255,255,0.65); }
-    .s-head { margin-bottom: 56px; }
 
     /* ─── Sticky Nav ─────────────────────────────────────────── */
     #nav {
@@ -252,7 +97,7 @@
       color: var(--plum);
       letter-spacing: .04em;
     }
-    .nav-logo em { color: var(--coral); font-style: normal; }
+    .nav-logo em { color: var(--coral-text); font-style: normal; }
 
     /* ─── HERO ───────────────────────────────────────────────── */
     #hero {
@@ -265,6 +110,15 @@
 
     #hero-grad-bg {
       position: absolute; inset: 0; z-index: 0;
+    }
+    /* The hero gradient is repainted every frame and cycles through yellow and
+       green, so contrast against it is not deterministic. This fixed scrim sits
+       between the gradient (z0) and the copy (z2) so the ratio holds at every
+       point of the cycle. */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(10,6,16,0.55) 0%, rgba(10,6,16,0.28) 38%, rgba(10,6,16,0.55) 72%, rgba(10,6,16,0.86) 100%);
     }
 
     .hero-in {
@@ -353,7 +207,7 @@
     .hero-scroll {
       position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.4); font-size: .72rem; letter-spacing: .1em;
+      color: rgba(255,255,255,0.62); font-size: .72rem; letter-spacing: .1em;
       animation: bounce 2.2s ease-in-out infinite;
       z-index: 2;
     }
@@ -508,7 +362,7 @@
       position: relative; z-index: 3;
     }
     .htl-step.active .htl-node {
-      background: #FF6B00; border-color: #FF6B00; color: #fff;
+      background: #B84E00; border-color: #B84E00; color: #fff;
       transform: scale(1.2);
       box-shadow: 0 0 0 6px rgba(255,107,0,0.2), 0 0 20px rgba(255,107,0,0.4);
     }
@@ -671,11 +525,11 @@
       cursor: pointer;
       border: 1.5px solid rgba(61,26,74,0.15);
       background: var(--white); color: var(--plum);
-      transition: var(--t-f);
+      transition: background var(--t-f), border-color var(--t-f), color var(--t-f);
       box-shadow: 0 2px 8px rgba(61,26,74,0.08);
     }
-    .tmt-pill:hover { background: var(--rose-lt); border-color: var(--rose); }
-    .tmt-pill.on { background: var(--coral); color: var(--white); border-color: var(--coral); box-shadow: var(--sh-coral); }
+    .tmt-pill:hover { background: var(--rose-lt); border-color: var(--rose-dk); }
+    .tmt-pill.on { background: var(--coral-btn); color: var(--white); border-color: var(--coral-btn); box-shadow: var(--sh-coral); }
 
     @media (max-width: 600px) {
       .tmt-avatar { width: 116px; height: 116px; }
@@ -745,7 +599,7 @@
     }
     .trk-badge {
       align-self: flex-start;
-      background: var(--coral); color: var(--white);
+      background: var(--coral-btn); color: var(--white);
       border-radius: var(--r-pill);
       padding: 6px 16px;
       font-size: .76rem; font-weight: 700; letter-spacing: .06em;
@@ -847,7 +701,7 @@
     }
     .tr-badge {
       position: absolute; bottom: 18px; right: 18px;
-      background: var(--coral);
+      background: var(--coral-btn);
       color: var(--white);
       font-size: .78rem; font-weight: 700;
       padding: 7px 16px; border-radius: var(--r-pill);
@@ -877,19 +731,23 @@
       cursor: pointer; font-family: var(--font); background: none; border: none;
       transition: color var(--t-f);
     }
-    .faq-q:hover { color: var(--coral); }
+    .faq-q:hover { color: var(--coral-text); }
     .faq-ico {
       width: 28px; height: 28px; border-radius: 50%;
       border: 1.5px solid rgba(61,26,74,0.2);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: var(--t); color: var(--coral);
+      flex-shrink: 0; transition: background var(--t), color var(--t), border-color var(--t), transform var(--t); color: var(--coral);
     }
     .faq-item.open .faq-ico {
-      background: var(--coral); color: var(--white);
-      border-color: var(--coral); transform: rotate(45deg);
+      background: var(--coral-btn); color: var(--white);
+      border-color: var(--coral-btn); transform: rotate(45deg);
       box-shadow: var(--sh-coral);
     }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-a {
+      max-height: 0; overflow: hidden; visibility: hidden;
+      transition: max-height .4s ease, visibility 0s linear .4s;
+    }
+    .faq-item.open .faq-a { visibility: visible; transition: max-height .4s ease, visibility 0s linear 0s; }
     .faq-a-in {
       padding-bottom: 20px;
       font-size: .95rem; color: var(--text-mid); line-height: 1.78;
@@ -908,22 +766,61 @@
       pointer-events: none;
     }
     .con-in { max-width: 580px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
-    #contact-form { margin-top: 44px; display: flex; flex-direction: column; gap: 14px; }
-    .f-field input, .f-field select {
+    #contact-form { margin-top: 44px; display: flex; flex-direction: column; gap: 14px; text-align: right; }
+    .f-field { text-align: right; }
+    .f-label {
+      display: block; margin-bottom: 7px;
+      font-size: .9rem; font-weight: 700; color: var(--white);
+    }
+    .f-label .f-req { color: var(--mint); font-weight: 700; margin-inline-start: 2px; }
+    .f-hint { display: block; margin-top: 6px; font-size: .8rem; color: rgba(255,255,255,.7); }
+    .f-field-err {
+      display: none; margin-top: 6px;
+      font-size: .82rem; font-weight: 600; color: #FFC2C4;
+    }
+    .f-field.has-error .f-field-err { display: block; }
+    .f-field.has-error input,
+    .f-field.has-error select { border-color: #FFC2C4; }
+
+    /* Two separate consents. The marketing one is optional and never pre-ticked
+       — a consent bundled into "I accept the terms" is not valid consent. */
+    .f-consents {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: 8px; padding: 16px 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--r-sm);
+    }
+    .f-check { display: flex; align-items: flex-start; gap: 11px; cursor: pointer; }
+    .f-check input[type="checkbox"] {
+      flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px;
+      accent-color: var(--coral-btn);
+      cursor: pointer;
+    }
+    .f-check span { font-size: .88rem; line-height: 1.6; color: rgba(255,255,255,.88); }
+    .f-check a { text-decoration: underline; color: var(--mint); font-weight: 700; }
+    .f-check a:hover { color: var(--mint-lt); }
+    .f-legal {
+      margin-top: 12px; font-size: .78rem; line-height: 1.65;
+      color: rgba(255,255,255,.68); text-align: right;
+    }
+    .f-legal a { text-decoration: underline; color: rgba(255,255,255,.85); }
+    .f-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
+    .f-field input:not([type="checkbox"]), .f-field select {
       width: 100%; padding: 17px 20px;
       border-radius: var(--r-sm);
       border: 1.5px solid rgba(255,255,255,0.15);
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
       color: var(--white); font-size: 1rem; font-family: var(--font);
-      text-align: right; direction: rtl; outline: none;
+      text-align: right; direction: rtl;
       transition: border-color var(--t-f), background var(--t-f), box-shadow var(--t-f);
       -webkit-appearance: none;
     }
-    .f-field input[name="phone"] { direction: ltr; text-align: right; }
-    .f-field input::placeholder { color: rgba(255,255,255,.38); }
+    .f-field input[type="tel"] { direction: ltr; text-align: right; }
+    .f-field input:not([type="checkbox"])::placeholder { color: rgba(255,255,255,.53); }
     .f-field select option { background: var(--plum-dk); color: var(--white); }
-    .f-field input:focus, .f-field select:focus {
+    .f-field input:not([type="checkbox"]):focus, .f-field select:focus {
       border-color: var(--coral);
       background: rgba(255,255,255,0.12);
       box-shadow: 0 0 0 3px rgba(255,90,95,0.2), var(--sh-coral);
@@ -934,7 +831,7 @@
     }
     .f-submit {
       padding: 17px 36px;
-      background: var(--coral);
+      background: var(--coral-btn);
       color: var(--white);
       border-radius: var(--r-pill); font-size: 1.08rem; font-weight: 700;
       font-family: var(--font); cursor: pointer; border: none;
@@ -963,9 +860,12 @@
       position: fixed; inset: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: center; padding: 20px;
       opacity: 0; visibility: hidden;
-      transition: opacity .3s ease, visibility .3s ease;
+      transition: opacity .3s ease, visibility 0s linear .3s;
     }
-    .popup.on { opacity: 1; visibility: visible; }
+    .popup.on {
+      opacity: 1; visibility: visible;
+      transition: opacity .3s ease, visibility 0s linear 0s;
+    }
     .p-ov {
       position: absolute; inset: 0;
       background: rgba(26,10,36,0.75);
@@ -987,18 +887,19 @@
       position: absolute; top: 14px; left: 14px;
       width: 32px; height: 32px; border-radius: 50%;
       background: rgba(61,26,74,0.06);
-      color: var(--text-soft);
+      color: rgba(26,10,36,0.57);
       font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
       cursor: pointer; border: 1px solid rgba(61,26,74,0.1);
-      font-family: var(--font); transition: var(--t-f);
+      font-family: var(--font);
+      transition: background var(--t-f), color var(--t-f), border-color var(--t-f);
     }
-    .p-close:hover { background: var(--coral); color: var(--white); border-color: var(--coral); }
+    .p-close:hover { background: var(--coral-btn); color: var(--white); border-color: var(--coral-btn); }
     .p-paw { font-size: 2.4rem; margin-bottom: 14px; }
     .p-box h3 { font-size: 1.45rem; font-weight: 900; color: var(--plum); margin-bottom: 10px; }
     .p-box p { font-size: .95rem; color: var(--text-mid); line-height: 1.68; margin-bottom: 26px; }
     .p-cta {
       width: 100%; padding: 15px;
-      background: var(--coral);
+      background: var(--coral-btn);
       color: var(--white);
       border-radius: var(--r-pill); font-size: .98rem; font-weight: 700;
       font-family: var(--font); cursor: pointer; border: none;
@@ -1011,10 +912,18 @@
       padding: 32px 24px;
       background: var(--plum-dk);
       text-align: center;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.46);
       font-size: .82rem;
       font-family: var(--font);
     }
+    .f-nav { margin: 10px 0 12px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .f-nav a { color: rgba(255,255,255,.82); text-decoration: underline; text-underline-offset: 3px; }
+    .f-nav a:hover { color: var(--white); }
+    .f-biz { font-size: .78rem; line-height: 1.9; color: rgba(255,255,255,.46); }
+    /* placeholder marker — nothing goes live while these are still visible */
+    .todo { background:#FFE9A8; color:#4A3200; border:1px dashed #A37A00; border-radius:6px;
+            padding:1px 7px; font-weight:700; font-size:.92em; }
+
     footer .f-logo { color: var(--coral); font-weight: 700; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .05em; }
 
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
@@ -1058,26 +967,30 @@
 </head>
 <body>
 
-<!-- ─── Sticky Nav ───────────────────────────────────────────────────── -->
-<nav id="nav" aria-label="ניווט ראשי">
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
+
+<!-- ─── Sticky Header ────────────────────────────────────────────────── -->
+<header id="nav">
   <div class="nav-in">
-    <div class="nav-logo">POODLE CLUB <em>by Orel Levi</em></div>
+    <div class="nav-logo"><span lang="en"><span lang="en">POODLE CLUB</span></span> <em lang="en">by Orel Levi</em></div>
     <a href="#contact" class="btn btn-coral" style="padding:10px 24px;font-size:.88rem;">להצטרפות</a>
   </div>
-</nav>
+</header>
+
+<main id="main">
 
 <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
-<section id="hero">
+<section id="hero" aria-label="Poodle Club — אימון פודלים מקצועי">
   <div id="hero-grad-bg"></div>
   <div class="hero-in">
-    <img src="animation-hero.gif" class="hero-poodle rv" alt="פודלים">
+    <img src="animation-hero.gif" class="hero-poodle rv" alt="שלושה פודלים לבנים מסתובבים יחד">
     <div class="hero-content rv" style="transition-delay:.1s">
       <div class="hero-tag">
         <span class="hero-tag-dot"></span>
         אימון פודלים מקצועי
       </div>
-      <span class="hero-brand">POODLE<br>CLUB</span>
-      <span class="hero-by">BY OREL LEVI</span>
+      <h1 class="hero-brand" lang="en">POODLE<br>CLUB</h1>
+      <span class="hero-by" lang="en"><span lang="en">BY OREL LEVI</span></span>
       <p class="hero-p">אימון מקצועי לפודלים מכל הסוגים והגדלים - גישה ייחודית שמותאמת לגזע החכם ביותר</p>
       <div class="hero-btns">
         <a href="#contact" class="btn btn-coral">אני רוצה להצטרף</a>
@@ -1091,24 +1004,24 @@
     </div>
   </div>
   <div class="hero-scroll" aria-hidden="true">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
     גלול מטה
   </div>
 </section>
 
 <!-- ─── Wave: Hero → Breeds ───────────────────────────────────────────── -->
 <div class="wave" style="background:var(--cream)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#F5E4CC"/>
   </svg>
 </div>
 
 <!-- ─── Breed Cards ───────────────────────────────────────────────────── -->
-<section id="breeds">
+<section id="breeds" aria-labelledby="breeds-title">
   <div class="breeds-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--plum">הגזעים שלנו</div>
-      <h2 class="s-title">הגזעים שאנחנו מאמנים</h2>
+      <h2 id="breeds-title" class="s-title">הגזעים שאנחנו מאמנים</h2>
       <div class="s-accent-line"></div>
       <p class="s-sub">כל סוגי הפודל ומשפחת ה-Doodle - אנחנו מכירים את כל אחד מהם</p>
     </div>
@@ -1159,26 +1072,26 @@
 
 <!-- ─── Wave: Breeds → Testimonials ──────────────────────────────────── -->
 <div class="wave" style="background:var(--cream)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#F5E4CC"/>
   </svg>
 </div>
 
 <!-- ─── Testimonials ──────────────────────────────────────────────────── -->
-<section id="testimonials">
+<section id="testimonials" aria-labelledby="testimonials-title">
   <div class="tmt-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--coral">לקוחות מספרים</div>
-      <h2 class="s-title">מה אומרים עלינו</h2>
+      <h2 id="testimonials-title" class="s-title">מה אומרים עלינו</h2>
       <div class="s-accent-line"></div>
       <p class="s-sub">תוצאות אמיתיות מכלבים אמיתיים</p>
     </div>
     <div class="tmt-stage">
       <div class="tmt-orb">
-        <div class="tmt-avatar-wrap" id="tmt-avatar-wrap">
+        <div class="tmt-avatar-wrap" id="tmt-avatar-wrap" role="button" tabindex="0" aria-expanded="false" aria-controls="tmt-bubble">
           <!-- Bubble lives inside avatar-wrap so it positions above it correctly -->
           <div class="tmt-bubble" id="tmt-bubble">
-            <div class="tmt-bubble-text" id="tmt-bubble-text"></div>
+            <div class="tmt-bubble-text" id="tmt-bubble-text" aria-hidden="true"></div>
             <span class="tmt-cursor">|</span>
             <p class="tmt-bubble-name" id="tmt-bubble-name"></p>
             <div class="tmt-tail">
@@ -1187,11 +1100,12 @@
               <div class="tmt-tail-d3"></div>
             </div>
           </div>
-          <img class="tmt-avatar" id="tmt-avatar" src="" alt="">
+          <img class="tmt-avatar" id="tmt-avatar" src="testimonials/הת'ר.png" alt="הת'ר — כלבה שעברה את התהליך">
         </div>
       </div>
     </div>
-    <div class="tmt-pills" id="tmt-pills"></div>
+    <div class="tmt-pills" id="tmt-pills" role="group" aria-label="בחירת המלצה"></div>
+    <div id="tmt-sr" class="sr-only" aria-live="polite"></div>
   </div>
 </section>
 
@@ -1212,38 +1126,38 @@
 </div>
 <!-- ─── Wave: Breeds → Why ────────────────────────────────────────────── -->
 <div class="wave" style="background:var(--sand)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#3D1A4A"/>
   </svg>
 </div>
 
 <!-- ─── Why Poodles ───────────────────────────────────────────────────── -->
-<section id="why">
+<section id="why" aria-labelledby="why-title">
   <div class="why-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--white">למה אנחנו</div>
-      <h2 class="s-title s-title--white">למה פודלים זה סיפור אחר</h2>
+      <h2 id="why-title" class="s-title s-title--white">למה פודלים זה סיפור אחר</h2>
       <div class="s-accent-line s-accent-line--mint"></div>
       <p class="s-sub s-sub--white">הגזע החכם, הנקי והמסור - עם גישת אימון שמתאימה לו בדיוק</p>
     </div>
     <div class="why-grid">
       <div class="why-card rv">
-        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2C8 2 4.5 5.5 4.5 9.5c0 2.5 1.3 4.7 3.2 6V18a.5.5 0 00.5.5h7.6a.5.5 0 00.5-.5v-2.5c1.9-1.3 3.2-3.5 3.2-6C19.5 5.5 16 2 12 2z"/><path d="M9 18.5v1.5a1 1 0 001 1h4a1 1 0 001-1v-1.5"/></svg></div>
+        <div class="wi"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2C8 2 4.5 5.5 4.5 9.5c0 2.5 1.3 4.7 3.2 6V18a.5.5 0 00.5.5h7.6a.5.5 0 00.5-.5v-2.5c1.9-1.3 3.2-3.5 3.2-6C19.5 5.5 16 2 12 2z"/><path d="M9 18.5v1.5a1 1 0 001 1h4a1 1 0 001-1v-1.5"/></svg></div>
         <h3>אינטליגנציה יוצאת דופן</h3>
         <p>פודלים מדורגים מקום ה-2 בסולם החכמה הכלבית. הם קולטים פקודות במהירות ואוהבים ללמוד בכל גיל.</p>
       </div>
       <div class="why-card rv" style="transition-delay:.1s">
-        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2a9 9 0 100 18A9 9 0 0012 2z"/><path d="M8.5 13.5s1.2 1.5 3.5 1.5 3.5-1.5 3.5-1.5"/><circle cx="9.5" cy="9.5" r="1" fill="#FF5A5F"/><circle cx="14.5" cy="9.5" r="1" fill="#FF5A5F"/></svg></div>
+        <div class="wi"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M12 2a9 9 0 100 18A9 9 0 0012 2z"/><path d="M8.5 13.5s1.2 1.5 3.5 1.5 3.5-1.5 3.5-1.5"/><circle cx="9.5" cy="9.5" r="1" fill="#FF5A5F"/><circle cx="14.5" cy="9.5" r="1" fill="#FF5A5F"/></svg></div>
         <h3>לא שופכים שיער</h3>
         <p>מושלם לאלרגיים ולבית נקי. הפרווה ההיפואלרגנית מייחדת את הפודל מרוב גזעי הכלבים.</p>
       </div>
       <div class="why-card rv" style="transition-delay:.2s">
-        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+        <div class="wi"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
         <h3>לומדים בשמחה</h3>
         <p>נולדו ללמוד. פודלים מגיבים בצורה יוצאת דופן לאימון חיובי ומפתחים קשר עמוק עם המאמן.</p>
       </div>
       <div class="why-card rv" style="transition-delay:.3s">
-        <div class="wi"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="wi"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
         <h3>קהילה חמה</h3>
         <p>משפחת הפודל קלאב תתמוך בכם לאורך כל הדרך - עם קבוצת תמיכה, חומרים ומפגשי בוגרים.</p>
       </div>
@@ -1253,24 +1167,24 @@
 
 <!-- ─── Wave: Why → How ───────────────────────────────────────────────── -->
 <div class="wave" style="background:var(--plum)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#1a0a2e"/>
   </svg>
 </div>
 
 <!-- ─── How It Works ──────────────────────────────────────────────────── -->
-<section id="how">
+<section id="how" aria-labelledby="how-title">
   <div class="how-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--coral">התהליך</div>
-      <h2 class="s-title">איך זה עובד</h2>
+      <h2 id="how-title" class="s-title">איך זה עובד</h2>
       <div class="s-accent-line"></div>
       <p class="s-sub">תהליך פשוט, ברור ומותאם אישית לכם ולכלב שלכם</p>
     </div>
     <div class="how-tl" id="how-tl">
       <div class="htl-spine-track" id="htl-spine-track"></div>
       <div class="htl-spine-fill"  id="htl-spine-fill"></div>
-      <img class="htl-paw" id="htl-paw" src="foot-print.gif" alt="🐾">
+      <img class="htl-paw" id="htl-paw" src="foot-print.gif" alt="" aria-hidden="true">
 
       <div class="htl-grid" id="htl-grid">
         <!-- Step 01 -->
@@ -1278,7 +1192,7 @@
           <div class="htl-node" id="htl-node-0">01</div>
           <div class="htl-card rv">
             <div class="htl-illus">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Two chat bubbles -->
                 <rect x="6" y="8" width="34" height="24" rx="8" fill="#6B2FA0"/>
                 <polygon points="14,32 8,42 22,32" fill="#6B2FA0"/>
@@ -1301,7 +1215,7 @@
           <div class="htl-node" id="htl-node-1">02</div>
           <div class="htl-card rv" style="transition-delay:.05s">
             <div class="htl-illus">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Clipboard -->
                 <rect x="12" y="10" width="28" height="38" rx="5" fill="#4ECDC4"/>
                 <rect x="19" y="6" width="14" height="8" rx="4" fill="#6B2FA0"/>
@@ -1324,7 +1238,7 @@
           <div class="htl-node" id="htl-node-2">03</div>
           <div class="htl-card rv" style="transition-delay:.1s">
             <div class="htl-illus">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Person -->
                 <circle cx="20" cy="16" r="7" fill="#6B2FA0"/>
                 <path d="M10 44 Q10 30 20 30 Q30 30 30 44" fill="#6B2FA0"/>
@@ -1349,7 +1263,7 @@
           <div class="htl-node" id="htl-node-3">04</div>
           <div class="htl-card rv" style="transition-delay:.15s">
             <div class="htl-illus">
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Trophy cup -->
                 <path d="M20 8 H44 V30 Q44 44 32 48 Q20 44 20 30 Z" fill="#FF6B00"/>
                 <rect x="27" y="48" width="10" height="6" rx="2" fill="#FF9A4D"/>
@@ -1377,30 +1291,30 @@
 <div class="ticker ticker--coral">
   <div class="ticker-track">
     <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>מסלול CLUB · מסלול SOLO</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span lang="en">POODLE CLUB</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול <span lang="en">CLUB</span> · מסלול <span lang="en">SOLO</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span lang="en">BY OREL LEVI</span></span>
     <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
     <span class="ticker-item"><span class="ticker-dot"></span>הצטרפות פתוחה עכשיו</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>POODLE CLUB</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>מסלול CLUB · מסלול SOLO</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>BY OREL LEVI</span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span lang="en">POODLE CLUB</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>מסלול <span lang="en">CLUB</span> · מסלול <span lang="en">SOLO</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span lang="en">BY OREL LEVI</span></span>
     <span class="ticker-item"><span class="ticker-dot"></span>שיחת ייעוץ חינמית</span>
   </div>
 </div>
 <!-- ─── Wave: How → Benefits ──────────────────────────────────────────── -->
 <div class="wave" style="background:var(--coral)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#F5E4CC"/>
   </svg>
 </div>
 
 <!-- ─── Benefits ─────────────────────────────────────────────────────── -->
-<section id="benefits">
+<section id="benefits" aria-labelledby="benefits-title">
   <div class="ben-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--plum">מה כלול</div>
-      <h2 class="s-title">מה אתם מקבלים</h2>
+      <h2 id="benefits-title" class="s-title">מה אתם מקבלים</h2>
       <div class="s-accent-line"></div>
       <p class="s-sub">הרבה יותר מסתם שיעורי אילוף - תמיכה מלאה לאורך כל הדרך</p>
     </div>
@@ -1409,11 +1323,11 @@
       #orbit-wrap{display:flex;justify-content:center;padding:24px 0 64px;overflow:visible;}
       #orbit-canvas{position:relative;width:min(520px,88vw);height:min(520px,88vw);flex-shrink:0;}
       .onode{position:absolute;top:50%;left:50%;cursor:pointer;user-select:none;}
-      .onode-inner{width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid transparent;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;}
+      .onode-inner{display:flex;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid transparent;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;}
       .onode-inner svg{width:20px;height:20px;pointer-events:none;}
       .onode:hover .onode-inner{transform:scale(1.2);}
       .onode.on .onode-inner{transform:scale(1.5);box-shadow:0 6px 22px rgba(61,26,74,.22);}
-      .onode-lbl{position:absolute;top:30px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.63rem;font-weight:700;color:var(--plum);pointer-events:none;line-height:1;transition:font-size .2s;}
+      .onode-lbl{display:block;position:absolute;top:30px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.72rem;font-weight:700;color:var(--plum);pointer-events:none;line-height:1;transition:font-size .2s;}
       .onode.on .onode-lbl{font-size:.7rem;}
       #orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1.5px dashed rgba(61,26,74,.18);transform:translate(-50%,-50%);pointer-events:none;}
       #orbit-cx{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:var(--white);border:2.5px solid var(--rose);box-shadow:0 4px 20px rgba(61,26,74,.14),inset 0 1px 0 rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;text-align:center;z-index:10;cursor:default;}
@@ -1437,12 +1351,12 @@
       var ring=document.getElementById('orbit-ring');
       var cx=document.getElementById('orbit-cx');
       var NODES=[
-        {id:0,title:'אימון מותאם לגזע',      desc:'שיטות שפותחו במיוחד לפודל - לא גנרי, אלא מדויק לצרכים ולאופי הייחודי של הגזע.',color:'#FF5A5F',bg:'rgba(255,90,95,.1)',   icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'},
-        {id:1,title:'ליווי אישי בין מפגשים', desc:'לא נשארים לבד. תמיכה ופידבק אישי לכל שאלה שעולה בין שיעור לשיעור.',            color:'#3D1A4A',bg:'rgba(61,26,74,.09)',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
-        {id:2,title:'קבוצת וואטסאפ תומכת',   desc:'קבוצה חיה ופעילה של בעלי פודלים - שאלות, טיפים, הצלחות ורגעים מתוקים.',       color:'#1DAA61',bg:'rgba(29,170,97,.1)',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'},
-        {id:3,title:'חומרי לימוד דיגיטליים', desc:'מדריכים, סרטונים וגיליונות תרגול - נגישים לכם בכל זמן, גם בין הפגישות.',      color:'#E07888',bg:'rgba(224,120,136,.1)',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'},
-        {id:4,title:'מפגשי בוגרים',           desc:'גם אחרי שמסיימים, הקהילה ממשיכה - מפגשים ואתגרים לבוגרי הפודל קלאב.',      color:'#E07888',bg:'rgba(242,167,176,.2)',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'},
-        {id:5,title:'גיבוי מקצועי בכל עת',   desc:'כשמשהו לא הולך כמתוכנן - יש לכם מאמן מוסמך זמין לענות ולעזור לפתור.',       color:'#5A2870',bg:'rgba(90,40,112,.08)', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'}
+        {id:0,title:'אימון מותאם לגזע',      desc:'שיטות שפותחו במיוחד לפודל - לא גנרי, אלא מדויק לצרכים ולאופי הייחודי של הגזע.',color:'#FF5A5F',bg:'rgba(255,90,95,.1)',   icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'},
+        {id:1,title:'ליווי אישי בין מפגשים', desc:'לא נשארים לבד. תמיכה ופידבק אישי לכל שאלה שעולה בין שיעור לשיעור.',            color:'#3D1A4A',bg:'rgba(61,26,74,.09)',  icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
+        {id:2,title:'קבוצת וואטסאפ תומכת',   desc:'קבוצה חיה ופעילה של בעלי פודלים - שאלות, טיפים, הצלחות ורגעים מתוקים.',       color:'#1DAA61',bg:'rgba(29,170,97,.1)',  icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'},
+        {id:3,title:'חומרי לימוד דיגיטליים', desc:'מדריכים, סרטונים וגיליונות תרגול - נגישים לכם בכל זמן, גם בין הפגישות.',      color:'#E07888',bg:'rgba(224,120,136,.1)',icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'},
+        {id:4,title:'מפגשי בוגרים',           desc:'גם אחרי שמסיימים, הקהילה ממשיכה - מפגשים ואתגרים לבוגרי הפודל קלאב.',      color:'#E07888',bg:'rgba(242,167,176,.2)',icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'},
+        {id:5,title:'גיבוי מקצועי בכל עת',   desc:'כשמשהו לא הולך כמתוכנן - יש לכם מאמן מוסמך זמין לענות ולעזור לפתור.',       color:'#5A2870',bg:'rgba(90,40,112,.08)', icon:'<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'}
       ];
       var R=0,ang=0,autoRot=true,activeId=null;
 
@@ -1458,10 +1372,16 @@
       }
 
       var els=NODES.map(function(n,i){
-        var el=document.createElement('div');
+        var el=document.createElement('button');
+        el.type='button';
         el.className='onode';
-        el.innerHTML='<div class="onode-inner" style="background:'+n.bg+';border-color:'+n.color+';color:'+n.color+';">'+n.icon+'</div><div class="onode-lbl">'+n.title+'</div>';
+        el.setAttribute('aria-expanded','false');
+        el.innerHTML='<span class="onode-inner" style="background:'+n.bg+';border-color:'+n.color+';color:'+n.color+';">'+n.icon+'</span><span class="onode-lbl">'+n.title+'</span>';
         el.addEventListener('click',function(e){e.stopPropagation();toggle(n.id,i);});
+        // a moving target is hard to hit - stop the orbit while it has focus
+        el.addEventListener('focus',function(){autoRot=false;});
+        el.addEventListener('blur',function(){if(activeId===null)autoRot=true;});
+        el.addEventListener('keydown',function(e){if(e.key==='Escape'&&activeId===n.id){deactivate();el.focus();}});
         canvas.appendChild(el);
         return el;
       });
@@ -1475,7 +1395,9 @@
         ang=-(idx/NODES.length)*360;
         var el=els[idx];
         el.classList.add('on');
-        var ping=document.createElement('div'); ping.className='onode-ping'; el.appendChild(ping);
+        el.setAttribute('aria-expanded','true');
+        var ping=document.createElement('div'); ping.className='onode-ping'; ping.setAttribute('aria-hidden','true'); el.appendChild(ping);
+        render();
         var pop=document.createElement('div'); pop.className='onode-popup';
         pop.innerHTML='<b>'+NODES[idx].title+'</b><p>'+NODES[idx].desc+'</p><div class="onode-popup-tip"></div>';
         el.appendChild(pop);
@@ -1485,6 +1407,7 @@
         activeId=null;
         els.forEach(function(el){
           el.classList.remove('on');
+          el.setAttribute('aria-expanded','false');
           var c=el.querySelector('.onode-ping'); if(c)c.remove();
           var p=el.querySelector('.onode-popup'); if(p)p.remove();
         });
@@ -1492,30 +1415,37 @@
         else setTimeout(function(){autoRot=true;},700);
       }
 
-      function tick(){
-        if(autoRot) ang=(ang+0.25)%360;
+      var rafId=null;
+      function render(){
         NODES.forEach(function(n,i){
           var a=((i/NODES.length)*360+ang)*Math.PI/180;
           var x=R*Math.cos(a),y=R*Math.sin(a);
           var isAct=n.id===activeId;
-          var op=activeId!==null?(isAct?1:0.25):Math.max(0.42,0.42+0.58*((1+Math.sin(a))/2));
+          var op=activeId!==null?(isAct?1:0.5):Math.max(0.7,0.7+0.3*((1+Math.sin(a))/2));
           els[i].style.transform='translate('+x+'px,'+y+'px)';
           els[i].style.opacity=op;
           els[i].style.zIndex=isAct?200:(50+Math.round(30*Math.cos(a)));
         });
-        requestAnimationFrame(tick);
       }
+      function tick(){
+        if(window.pcMotionOff){ render(); rafId=null; return; }
+        if(autoRot) ang=(ang+0.25)%360;
+        render();
+        rafId=requestAnimationFrame(tick);
+      }
+      function startTick(){ if(rafId===null) rafId=requestAnimationFrame(tick); }
 
       resize();
-      window.addEventListener('resize',resize);
-      requestAnimationFrame(tick);
+      window.addEventListener('resize',function(){resize();render();});
+      document.addEventListener('pc:motion',function(e){ if(e.detail.off){ render(); } else { startTick(); } });
+      startTick();
     })();
     </script>
   </div>
 </section>
 
 <!-- ─── Trainer ───────────────────────────────────────────────────────── -->
-<section id="trainer">
+<section id="trainer" aria-labelledby="trainer-title">
   <div class="tr-in">
     <div class="tr-img-wrap rv">
       <img src="profile-pic.jpg" alt="אוראל לוי - מאמן פודלים" class="tr-img">
@@ -1523,7 +1453,7 @@
     </div>
     <div class="rv" style="transition-delay:.15s">
       <div class="s-eyebrow s-eyebrow--plum">המאמן</div>
-      <h2 class="s-title">מי אני</h2>
+      <h2 id="trainer-title" class="s-title">מי אני</h2>
       <div class="s-accent-line"></div>
       <p class="tr-bio">
         שמי אוראל לוי, מאמן פודלים מוסמך עם ניסיון של 8 שנים בעבודה עם גזע הפודל בכל גדליו ומוצאיו.
@@ -1542,17 +1472,17 @@
 
 <!-- ─── Wave: Trainer → Tracks ───────────────────────────────────────── -->
 <div class="wave" style="background:var(--sand)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#3D1A4A"/>
   </svg>
 </div>
 
 <!-- ─── Tracks ────────────────────────────────────────────────────────── -->
-<section id="tracks">
+<section id="tracks" aria-labelledby="tracks-title">
   <div class="tracks-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--white">מסלולים</div>
-      <h2 class="s-title s-title--white">המסלולים שלנו</h2>
+      <h2 id="tracks-title" class="s-title s-title--white">המסלולים שלנו</h2>
       <div class="s-accent-line s-accent-line--mint"></div>
       <p class="s-sub s-sub--white">בוחרים את התהליך שמתאים לכלב, למטרות ולקצב שלכם.</p>
     </div>
@@ -1561,16 +1491,16 @@
       <!-- CLUB -->
       <article class="trk-card trk-card--feat rv">
         <span class="trk-badge">המסלול המומלץ</span>
-        <h3 class="trk-name">מסלול CLUB</h3>
+        <h3 class="trk-name">מסלול <span lang="en">CLUB</span></h3>
         <div class="trk-kicker">פרטני + קבוצתי</div>
         <p class="trk-desc">תהליך שמתחיל בעבודה אישית בבית וממשיך לתרגול בסביבה עם גירויים.</p>
         <ul class="tr-list">
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים פרטניים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים קבוצתיים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>חברות בקהילת Poodle Club</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>מפגש בוגרים</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים פרטניים</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>6 מפגשים קבוצתיים</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>חברות בקהילת <span lang="en">Poodle Club</span></li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>מפגש בוגרים</li>
         </ul>
         <div class="trk-fit">מתאים למי שרוצה לבנות את היסודות בצורה אישית ואז לתרגל אותם גם מול כלבים, אנשים וגירויים.</div>
         <a href="#contact" class="btn btn-coral trk-cta">בדקו התאמה</a>
@@ -1578,13 +1508,13 @@
 
       <!-- SOLO -->
       <article class="trk-card rv" style="transition-delay:.08s">
-        <h3 class="trk-name">מסלול SOLO</h3>
+        <h3 class="trk-name">מסלול <span lang="en">SOLO</span></h3>
         <div class="trk-kicker">פרטני בלבד</div>
         <p class="trk-desc">תהליך אישי אחד על אחד, בהתאם לכלב ולקשיים שאיתם אתם מתמודדים.</p>
         <ul class="tr-list">
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>10 מפגשים פרטניים</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
-          <li><span class="tr-chk"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>10 מפגשים פרטניים</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>תוכנית עבודה אישית</li>
+          <li><span class="tr-chk"><svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg></span>ליווי בוואטסאפ</li>
         </ul>
         <div class="trk-fit">מתאים למי שמעדיף תהליך פרטני בלבד, גר מחוץ לאזור הפעילות של הקבוצה או לכלב שעבודה קבוצתית עדיין אינה מתאימה לו.</div>
         <a href="#contact" class="btn btn-coral trk-cta">בדקו התאמה</a>
@@ -1625,44 +1555,44 @@
 
 <!-- ─── Wave: Tracks → FAQ ────────────────────────────────────────────── -->
 <div class="wave" style="background:var(--plum)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L0,30 Q15,55 30,30 Q45,5 60,30 Q75,55 90,30 Q105,5 120,30 Q135,55 150,30 Q165,5 180,30 Q195,55 210,30 Q225,5 240,30 Q255,55 270,30 Q285,5 300,30 Q315,55 330,30 Q345,5 360,30 Q375,55 390,30 Q405,5 420,30 Q435,55 450,30 Q465,5 480,30 Q495,55 510,30 Q525,5 540,30 Q555,55 570,30 Q585,5 600,30 Q615,55 630,30 Q645,5 660,30 Q675,55 690,30 Q705,5 720,30 Q735,55 750,30 Q765,5 780,30 Q795,55 810,30 Q825,5 840,30 Q855,55 870,30 Q885,5 900,30 Q915,55 930,30 Q945,5 960,30 Q975,55 990,30 Q1005,5 1020,30 Q1035,55 1050,30 Q1065,5 1080,30 Q1095,55 1110,30 Q1125,5 1140,30 Q1155,55 1170,30 Q1185,5 1200,30 Q1215,55 1230,30 Q1245,5 1260,30 Q1275,55 1290,30 Q1305,5 1320,30 Q1335,55 1350,30 Q1365,5 1380,30 Q1395,55 1410,30 Q1425,5 1440,30 L1440,0 Z" fill="#FFF8F0"/>
   </svg>
 </div>
 
 <!-- ─── FAQ ───────────────────────────────────────────────────────────── -->
-<section id="faq">
+<section id="faq" aria-labelledby="faq-title">
   <div class="faq-in">
     <div class="s-head rv">
       <div class="s-eyebrow s-eyebrow--plum" style="margin:0 auto 16px;">שאלות</div>
-      <h2 class="s-title" style="text-align:center">שאלות נפוצות</h2>
+      <h2 id="faq-title" class="s-title" style="text-align:center">שאלות נפוצות</h2>
       <div class="s-accent-line s-accent-line--center"></div>
       <p class="s-sub" style="text-align:center">כל מה שרציתם לדעת לפני שמצטרפים</p>
     </div>
     <div class="faq-list">
       <div class="faq-item rv">
-        <button class="faq-q" aria-expanded="false">מה ההבדל בין מסלול CLUB למסלול SOLO?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">מסלול CLUB משלב 6 מפגשים פרטניים ו-6 מפגשים קבוצתיים - מתחילים בעבודה אישית בבית וממשיכים לתרגול בסביבה עם גירויים. מסלול SOLO הוא 10 מפגשים פרטניים בלבד, ומתאים למי שמעדיף תהליך אישי, גר מחוץ לאזור הפעילות של הקבוצה או לכלב שעבודה קבוצתית עדיין אינה מתאימה לו.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">מה ההבדל בין מסלול CLUB למסלול SOLO?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1"><div class="faq-a-in">מסלול CLUB משלב 6 מפגשים פרטניים ו-6 מפגשים קבוצתיים - מתחילים בעבודה אישית בבית וממשיכים לתרגול בסביבה עם גירויים. מסלול SOLO הוא 10 מפגשים פרטניים בלבד, ומתאים למי שמעדיף תהליך אישי, גר מחוץ לאזור הפעילות של הקבוצה או לכלב שעבודה קבוצתית עדיין אינה מתאימה לו.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.05s">
-        <button class="faq-q" aria-expanded="false">מאיזה גיל ניתן להתחיל?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">ניתן להתחיל כבר מגיל 3-4 חודשים - זהו החלון האידיאלי להטמעת הרגלים חיוביים. כלבים מבוגרים יותר יכולים להצטרף בכל גיל, פודלים לא מפסיקים ללמוד.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">מאיזה גיל ניתן להתחיל?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2"><div class="faq-a-in">ניתן להתחיל כבר מגיל 3-4 חודשים - זהו החלון האידיאלי להטמעת הרגלים חיוביים. כלבים מבוגרים יותר יכולים להצטרף בכל גיל, פודלים לא מפסיקים ללמוד.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.1s">
-        <button class="faq-q" aria-expanded="false">כמה כלבים בקבוצה?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">הקבוצות מוגבלות ל-6 כלבים לכל היותר, כדי שכל כלב יקבל תשומת לב אישית. הקבוצות מחולקות לפי גיל וגודל, כך שהפגישות יהיו סביבה בטוחה ומעשירה.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">כמה כלבים בקבוצה?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3"><div class="faq-a-in">הקבוצות מוגבלות ל-6 כלבים לכל היותר, כדי שכל כלב יקבל תשומת לב אישית. הקבוצות מחולקות לפי גיל וגודל, כך שהפגישות יהיו סביבה בטוחה ומעשירה.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.15s">
-        <button class="faq-q" aria-expanded="false">האם המסלול מתאים לכלב שכבר עשה אימון?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">בהחלט. בשיחת ההתאמה ובפגישת האבחון ממפים מה הכלב כבר יודע ומה עדיין חסר, ומשם נקבע כיוון העבודה ונקודת הפתיחה של התהליך.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">האם המסלול מתאים לכלב שכבר עשה אימון?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4"><div class="faq-a-in">בהחלט. בשיחת ההתאמה ובפגישת האבחון ממפים מה הכלב כבר יודע ומה עדיין חסר, ומשם נקבע כיוון העבודה ונקודת הפתיחה של התהליך.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.2s">
-        <button class="faq-q" aria-expanded="false">איך נקבע המחיר?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">המחיר נקבע בשיחת התאמה אישית לפי הכלב שלכם, גילו, הרקע שלו, והמטרות שאתם מגדירים. לא מאמין במחירון אחד לכולם - כי כל כלב הוא סיפור שונה.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">איך נקבע המחיר?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5"><div class="faq-a-in">המחיר נקבע בשיחת התאמה אישית לפי הכלב שלכם, גילו, הרקע שלו, והמטרות שאתם מגדירים. לא מאמין במחירון אחד לכולם - כי כל כלב הוא סיפור שונה.</div></div>
       </div>
       <div class="faq-item rv" style="transition-delay:.25s">
-        <button class="faq-q" aria-expanded="false">מה אם פספסנו פגישה?<span class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-in">כל משתתף יכול לפספס פגישה אחת ולקבל תחליף בקבוצה אחרת שמתאימה לרמתם. מעבר לכך, נמצא יחד פתרון - לא עוזבים אף אחד מאחור.</div></div>
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">מה אם פספסנו פגישה?<span class="faq-ico"><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2v8M2 6h8"/></svg></span></button>
+        <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6"><div class="faq-a-in">כל משתתף יכול לפספס פגישה אחת ולקבל תחליף בקבוצה אחרת שמתאימה לרמתם. מעבר לכך, נמצא יחד פתרון - לא עוזבים אף אחד מאחור.</div></div>
       </div>
     </div>
   </div>
@@ -1670,24 +1600,35 @@
 
 <!-- ─── Wave: FAQ → Contact ───────────────────────────────────────────── -->
 <div class="wave" style="background:var(--cream)">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,60 L0,30 Q15,5 30,30 Q45,55 60,30 Q75,5 90,30 Q105,55 120,30 Q135,5 150,30 Q165,55 180,30 Q195,5 210,30 Q225,55 240,30 Q255,5 270,30 Q285,55 300,30 Q315,5 330,30 Q345,55 360,30 Q375,5 390,30 Q405,55 420,30 Q435,5 450,30 Q465,55 480,30 Q495,5 510,30 Q525,55 540,30 Q555,5 570,30 Q585,55 600,30 Q615,5 630,30 Q645,55 660,30 Q675,5 690,30 Q705,55 720,30 Q735,5 750,30 Q765,55 780,30 Q795,5 810,30 Q825,55 840,30 Q855,5 870,30 Q885,55 900,30 Q915,5 930,30 Q945,55 960,30 Q975,5 990,30 Q1005,55 1020,30 Q1035,5 1050,30 Q1065,55 1080,30 Q1095,5 1110,30 Q1125,55 1140,30 Q1155,5 1170,30 Q1185,55 1200,30 Q1215,5 1230,30 Q1245,55 1260,30 Q1275,5 1290,30 Q1305,55 1320,30 Q1335,5 1350,30 Q1365,55 1380,30 Q1395,5 1410,30 Q1425,55 1440,30 L1440,60 Z" fill="#3D1A4A"/>
   </svg>
 </div>
 
 <!-- ─── Contact ───────────────────────────────────────────────────────── -->
-<section id="contact">
+<section id="contact" aria-labelledby="contact-title">
   <div class="con-in">
     <div class="s-eyebrow s-eyebrow--white" style="margin:0 auto 20px;">הצטרפו</div>
-    <h2 class="s-title s-title--white" style="text-align:center;font-size:clamp(1.8rem,3.5vw,2.8rem)">מוכנים להצטרף למשפחת הפודל קלאב?</h2>
+    <h2 id="contact-title" class="s-title s-title--white" style="text-align:center;font-size:clamp(1.8rem,3.5vw,2.8rem)">מוכנים להצטרף למשפחת הפודל קלאב?</h2>
     <div class="s-accent-line s-accent-line--center s-accent-line--mint" style="margin-top:20px;"></div>
     <p class="s-sub s-sub--white">השאירו פרטים ונחזור אליכם לשיחת התאמה קצרה - בלי התחייבות</p>
-    <form id="contact-form" novalidate>
-      <div class="f-field"><input type="text" name="name" placeholder="שם מלא" required autocomplete="name"></div>
-      <div class="f-field"><input type="tel" name="phone" placeholder="050-000-0000" dir="ltr" required autocomplete="tel"></div>
-      <div class="f-field">
-        <select name="dog_type" required>
-          <option value="" disabled selected>סוג הכלב שלכם</option>
+    <form id="contact-form" novalidate aria-describedby="f-legal">
+      <div class="f-field" id="field-name">
+        <label class="f-label" for="f-name">שם מלא <span class="f-req" aria-hidden="true">*</span></label>
+        <input type="text" id="f-name" name="name" placeholder="לדוגמה: דנה כהן" required aria-required="true"
+               autocomplete="name" aria-describedby="err-name">
+        <span class="f-field-err" id="err-name">נא למלא שם מלא</span>
+      </div>
+      <div class="f-field" id="field-phone">
+        <label class="f-label" for="f-phone">טלפון <span class="f-req" aria-hidden="true">*</span></label>
+        <input type="tel" id="f-phone" name="phone" placeholder="050-000-0000" dir="ltr" required aria-required="true"
+               autocomplete="tel" inputmode="tel" aria-describedby="err-phone">
+        <span class="f-field-err" id="err-phone">נא למלא מספר טלפון תקין</span>
+      </div>
+      <div class="f-field" id="field-dog">
+        <label class="f-label" for="f-dog">סוג הכלב <span class="f-req" aria-hidden="true">*</span></label>
+        <select id="f-dog" name="dog_type" required aria-required="true" aria-describedby="err-dog">
+          <option value="" disabled selected>בחרו סוג כלב</option>
           <option value="toy">פודל טוי</option>
           <option value="mini">פודל מיני</option>
           <option value="standard">פודל סטנדרט</option>
@@ -1696,11 +1637,39 @@
           <option value="shihpoo">שיהפו</option>
           <option value="other">אחר</option>
         </select>
+        <span class="f-field-err" id="err-dog">נא לבחור סוג כלב</span>
       </div>
+
+      <div class="f-consents">
+        <div class="f-field" id="field-privacy">
+          <label class="f-check">
+            <input type="checkbox" id="f-privacy" name="privacy_consent" required aria-required="true" aria-describedby="err-privacy">
+            <span>קראתי ואני מאשר/ת את <a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a> ואת השימוש בפרטים שלי לצורך יצירת קשר. <span class="f-req" aria-hidden="true">*</span></span>
+          </label>
+          <span class="f-field-err" id="err-privacy">חובה לאשר את מדיניות הפרטיות כדי לשלוח</span>
+        </div>
+        <label class="f-check">
+          <input type="checkbox" id="f-marketing" name="marketing_consent">
+          <span>אני מעוניין/ת לקבל עדכונים, טיפים והצעות בוואטסאפ, ב-SMS או במייל. אפשר להסיר את ההסכמה בכל רגע. (לא חובה)</span>
+        </label>
+      </div>
+
+      <!-- bot trap: a real person never fills this -->
+      <div class="f-hp" aria-hidden="true">
+        <label for="f-website">אל תמלאו שדה זה</label>
+        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
       <button type="submit" class="f-submit">שלחו לי פרטים</button>
+      <p class="f-legal" id="f-legal">
+        מסירת הפרטים היא מרצון ואינה חובה חוקית. הפרטים נשמרים אצל <span class="todo">[למלא: שם העוסק]</span> ומשמשים ליצירת קשר בלבד,
+        ולדיוור רק אם סימנתם על כך. פרטים נוספים ב<a href="privacy.html">מדיניות הפרטיות</a>.
+      </p>
+      <p class="f-err" id="f-form-err" role="alert" hidden></p>
     </form>
   </div>
 </section>
+</main>
 
 <!-- ─── Popup: Engagement ─────────────────────────────────────────────── -->
 <div id="popup-eng" class="popup" role="dialog" aria-modal="true" aria-labelledby="pe-title">
@@ -1727,8 +1696,16 @@
 </div>
 
 <footer>
-  <div class="f-logo">POODLE CLUB</div>
-  <div style="margin-top:6px">by Orel Levi &nbsp;·&nbsp; © 2026 · כל הזכויות שמורות</div>
+  <div class="f-logo"><span lang="en">POODLE CLUB</span></div>
+  <nav class="f-nav" aria-label="קישורים משפטיים">
+    <a href="privacy.html">מדיניות פרטיות</a> ·
+    <a href="accessibility.html">הצהרת נגישות</a>
+  </nav>
+  <div class="f-biz">
+    <span class="todo">[למלא: שם העוסק/החברה]</span> · ע.מ / ח.פ <span class="todo">[למלא: מספר]</span><br>
+    <span class="todo">[למלא: כתובת]</span> · טלפון <span class="todo">[למלא: טלפון]</span> · <span class="todo">[למלא: מייל]</span><br>
+    <span lang="en">by Orel Levi</span> &nbsp;·&nbsp; © 2026 · כל הזכויות שמורות
+  </div>
 </footer>
 
 <script>
@@ -1783,8 +1760,44 @@
 
   // ─── Popups ──────────────────────────────────────────────────────────
   let engShown = false, exitShown = false;
-  function showPop(id) { document.getElementById(id).classList.add('on'); document.body.style.overflow = 'hidden'; }
-  function hidePop(id) { document.getElementById(id).classList.remove('on'); document.body.style.overflow = ''; }
+  let popReturnFocus = null;
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  function showPop(id) {
+    const pop = document.getElementById(id);
+    popReturnFocus = document.activeElement;
+    pop.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    [...document.body.children].forEach(el => { if (el !== pop) el.setAttribute('inert', ''); });
+    // .popup transitions visibility, so it is not focusable in this same tick
+    requestAnimationFrame(function(){
+      const first = pop.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    });
+  }
+
+  function hidePop(id) {
+    const pop = document.getElementById(id);
+    pop.classList.remove('on');
+    document.body.style.overflow = '';
+    [...document.body.children].forEach(el => el.removeAttribute('inert'));
+    if (popReturnFocus && document.contains(popReturnFocus)) popReturnFocus.focus();
+    popReturnFocus = null;
+  }
+
+  window.__showPop = showPop; window.__hidePop = hidePop;   // used by the verification script
+
+  // Tab cycles inside the open dialog
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const pop = document.querySelector('.popup.on');
+    if (!pop) return;
+    const items = [...pop.querySelectorAll(FOCUSABLE)];
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   document.querySelectorAll('.p-close').forEach(b => b.addEventListener('click', () => hidePop(b.closest('.popup').id)));
   document.querySelectorAll('.popup').forEach(p => p.querySelector('.p-ov').addEventListener('click', () => hidePop(p.id)));
@@ -1792,34 +1805,103 @@
   document.getElementById('pex-cta').addEventListener('click', () => { hidePop('popup-exit'); document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') ['popup-eng','popup-exit'].forEach(id => { if (document.getElementById(id).classList.contains('on')) hidePop(id); }); });
 
-  const engTimer = setTimeout(() => { if (!engShown) { showPop('popup-eng'); engShown = true; } }, 30000 + Math.random() * 5000);
+  const engTimer = setTimeout(() => { if (!engShown && !window.pcMotionOff) { showPop('popup-eng'); engShown = true; } }, 30000 + Math.random() * 5000);
   const onScroll = () => {
     if (engShown) { window.removeEventListener('scroll', onScroll); return; }
     if (window.scrollY / (document.documentElement.scrollHeight - innerHeight) >= 0.4) {
-      clearTimeout(engTimer); showPop('popup-eng'); engShown = true; window.removeEventListener('scroll', onScroll);
+      clearTimeout(engTimer); window.removeEventListener('scroll', onScroll);
+      if (window.pcMotionOff) return;
+      showPop('popup-eng'); engShown = true;
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
-  document.addEventListener('mouseleave', e => { if (e.clientY <= 0 && !exitShown && !engShown) { showPop('popup-exit'); exitShown = true; } });
+  document.addEventListener('mouseleave', e => { if (e.clientY <= 0 && !exitShown && !engShown && !window.pcMotionOff) { showPop('popup-exit'); exitShown = true; } });
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') exitShown = true; });
 
   // ─── Form ────────────────────────────────────────────────────────────
   const WEBHOOK = 'https://hook.us2.make.com/1008gef18vuksep1csa1ekq1thbdpfua';
-  document.getElementById('contact-form').addEventListener('submit', async e => {
+  // Bump this whenever the consent wording changes, so a stored consent can be
+  // tied back to the exact text the person agreed to.
+  const CONSENT_VERSION = '2026-08-09';
+
+  const form   = document.getElementById('contact-form');
+  const formEl = { name: 'f-name', phone: 'f-phone', dog: 'f-dog', privacy: 'f-privacy' };
+
+  function setFieldError(inputId, on) {
+    const input = document.getElementById(inputId);
+    const field = input.closest('.f-field');
+    if (field) field.classList.toggle('has-error', on);
+    input.setAttribute('aria-invalid', on ? 'true' : 'false');
+  }
+
+  function validate() {
+    const bad = [];
+    const name    = document.getElementById('f-name');
+    const phone   = document.getElementById('f-phone');
+    const dog     = document.getElementById('f-dog');
+    const privacy = document.getElementById('f-privacy');
+
+    const nameOk    = name.value.trim().length >= 2;
+    const phoneOk   = /^[0-9+\-\s()]{9,15}$/.test(phone.value.trim());
+    const dogOk     = !!dog.value;
+    const privacyOk = privacy.checked;
+
+    setFieldError('f-name', !nameOk);       if (!nameOk)    bad.push(name);
+    setFieldError('f-phone', !phoneOk);     if (!phoneOk)   bad.push(phone);
+    setFieldError('f-dog', !dogOk);         if (!dogOk)     bad.push(dog);
+    setFieldError('f-privacy', !privacyOk); if (!privacyOk) bad.push(privacy);
+    return bad;
+  }
+
+  [formEl.name, formEl.phone, formEl.dog, formEl.privacy].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('change', () => { if (el.closest('.f-field').classList.contains('has-error')) validate(); });
+  });
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const form = e.target, btn = form.querySelector('.f-submit'), fd = new FormData(form);
-    const oldErr = form.querySelector('.f-err'); if (oldErr) oldErr.remove();
+    const btn    = form.querySelector('.f-submit');
+    const errBox = document.getElementById('f-form-err');
+    errBox.hidden = true; errBox.textContent = '';
+
+    const bad = validate();
+    if (bad.length) {
+      errBox.textContent = 'לא ניתן לשלוח - יש ' + bad.length + ' שדות שדורשים תשומת לב.';
+      errBox.hidden = false;
+      bad[0].focus();
+      return;
+    }
+
+    // honeypot: silently succeed for bots, never hit the webhook
+    if (document.getElementById('f-website').value) return;
+
     btn.disabled = true; btn.textContent = 'שולח...';
     try {
       const r = await fetch(WEBHOOK, { method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: fd.get('name'), phone: fd.get('phone'), dog_type: fd.get('dog_type'), source: 'poodle_club', ts: new Date().toISOString() }) });
+        body: JSON.stringify({
+          name:     document.getElementById('f-name').value.trim(),
+          phone:    document.getElementById('f-phone').value.trim(),
+          dog_type: document.getElementById('f-dog').value,
+          source:   'poodle_club',
+          ts:       new Date().toISOString(),
+          // consent record — needed to prove what was agreed and when
+          privacy_consent:   true,
+          marketing_consent: document.getElementById('f-marketing').checked,
+          consent_version:   CONSENT_VERSION,
+          consent_ts:        new Date().toISOString()
+        }) });
       if (!r.ok) throw new Error();
-      form.innerHTML = `<div class="f-success"><div style="font-size:2.5rem;margin-bottom:14px">🐩</div><h3>תודה! קיבלנו את הפרטים</h3><p>נחזור אליכם תוך 24 שעות לשיחת ההתאמה - מחכים לשמוע על הפודל שלכם!</p></div>`;
+      form.innerHTML = '<div class="f-success" role="status" tabindex="-1" id="f-done">' +
+        '<div style="font-size:2.5rem;margin-bottom:14px" aria-hidden="true">\uD83D\uDC29</div>' +
+        '<h3>תודה! קיבלנו את הפרטים</h3>' +
+        '<p>נחזור אליכם תוך 24 שעות לשיחת ההתאמה - מחכים לשמוע על הפודל שלכם!</p></div>';
+      document.getElementById('f-done').focus();
     } catch {
       btn.disabled = false; btn.textContent = 'שלחו לי פרטים';
-      const err = document.createElement('p'); err.className = 'f-err'; err.textContent = 'אירעה שגיאה בשליחה. אנא נסו שוב.';
-      form.appendChild(err);
+      errBox.textContent = 'אירעה שגיאה בשליחה. אנא נסו שוב, או פנו אלינו ישירות.';
+      errBox.hidden = false;
+      errBox.focus && errBox.focus();
     }
   });
 
@@ -1867,14 +1949,17 @@
     var heroH = hero.offsetHeight || window.innerHeight;
     var progress = Math.min(1, window.scrollY / heroH);
     cy = 20 + progress * 50; // 20% at top → 70% as hero exits
+    if (window.paintHeroGradient) window.paintHeroGradient();
   }, { passive: true });
 
-  function frame() {
-    var s = stops.map(function(st,i){ return colors[i]+' '+st+'%'; }).join(',');
-    bg.style.background = 'radial-gradient(125% 125% at 50% '+cy.toFixed(1)+'%,'+s+')';
-    requestAnimationFrame(frame);
+  var STOPS = stops.map(function(st,i){ return colors[i]+' '+st+'%'; }).join(',');
+  var queued = false;
+  function paint() {
+    queued = false;
+    bg.style.background = 'radial-gradient(125% 125% at 50% '+cy.toFixed(1)+'%,'+STOPS+')';
   }
-  requestAnimationFrame(frame);
+  window.paintHeroGradient = function(){ if (!queued) { queued = true; requestAnimationFrame(paint); } };
+  paint();
 })();
 </script>
 
@@ -1993,10 +2078,10 @@
 
   function renderPills() {
     pills.innerHTML = DATA.map(function(d,i){
-      return '<button class="tmt-pill'+(i===active?' on':'')+'" data-i="'+i+'">'+d.name+'</button>';
+      return '<button type="button" class="tmt-pill'+(i===active?' on':'')+'" data-i="'+i+'" aria-pressed="'+(i===active)+'">'+d.name+'</button>';
     }).join('');
     pills.querySelectorAll('.tmt-pill').forEach(function(b){
-      b.addEventListener('click', function(){ goTo(+b.dataset.i, false); });
+      b.addEventListener('click', function(){ goTo(+b.dataset.i, false); showBubble(); });
     });
   }
 
@@ -2006,7 +2091,7 @@
     avatar.classList.add('tmt-avatar--out');
     setTimeout(function(){
       avatar.src = DATA[active].img;
-      avatar.alt = DATA[active].name;
+      avatar.alt = DATA[active].name + ' — כלב/ה שעבר/ה את התהליך';
       avatar.classList.remove('tmt-avatar--out');
       avatar.classList.add('tmt-avatar--in');
       setTimeout(function(){ avatar.classList.remove('tmt-avatar--in'); }, 750);
@@ -2017,34 +2102,63 @@
 
   function startAuto() {
     clearInterval(autoT);
+    if (window.pcMotionOff) { autoT = null; return; }   // WCAG 2.2.2 — no auto-rotation
     autoT = setInterval(function(){ goTo(active+1, true); }, 6000);
   }
   function pauseAuto() { clearInterval(autoT); autoT = null; }
   function resumeAuto() { if (!autoT) startAuto(); }
 
   function startTypewriter(text) {
-    clearTimeout(typeT); bText.textContent = ''; var i = 0;
+    clearTimeout(typeT);
+    if (window.pcMotionOff) { bText.textContent = text; return; }
+    bText.textContent = ''; var i = 0;
     function type(){ if(i<=text.length){ bText.textContent=text.slice(0,i++); typeT=setTimeout(type,28); } }
     type();
   }
   function stopTypewriter() { clearTimeout(typeT); bText.textContent = ''; }
 
-  function showBubble() { bName.textContent=DATA[active].name; bubble.classList.add('on'); startTypewriter(DATA[active].text); }
-  function hideBubble() { bubble.classList.remove('on'); stopTypewriter(); }
+  var srLive = document.getElementById('tmt-sr');
+
+  function showBubble() {
+    bName.textContent = DATA[active].name;
+    bubble.classList.add('on');
+    wrap.setAttribute('aria-expanded','true');
+    // the typewriter is decorative; screen readers get the whole quote at once
+    srLive.textContent = DATA[active].name + ': ' + DATA[active].text;
+    startTypewriter(DATA[active].text);
+  }
+  function hideBubble() {
+    bubble.classList.remove('on');
+    wrap.setAttribute('aria-expanded','false');
+    srLive.textContent = '';
+    stopTypewriter();
+  }
 
   wrap.addEventListener('mouseenter', function(){ pauseAuto(); showBubble(); });
   wrap.addEventListener('mouseleave', function(){ hideBubble(); resumeAuto(); });
+  wrap.addEventListener('focus', function(){ pauseAuto(); showBubble(); });
+  wrap.addEventListener('blur',  function(){ hideBubble(); resumeAuto(); });
+  wrap.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      bubble.classList.contains('on') ? hideBubble() : showBubble();
+    } else if (e.key === 'Escape') { hideBubble(); }
+  });
   pills.addEventListener('mouseenter', pauseAuto);
   pills.addEventListener('mouseleave', resumeAuto);
+  pills.addEventListener('focusin',  pauseAuto);
+  pills.addEventListener('focusout', resumeAuto);
   wrap.addEventListener('touchstart', function(e){
     e.preventDefault();
     bubble.classList.contains('on') ? hideBubble() : showBubble();
   }, { passive: false });
 
-  avatar.src = DATA[0].img; avatar.alt = DATA[0].name;
+  avatar.src = DATA[0].img; avatar.alt = DATA[0].name + ' — כלב/ה שעבר/ה את התהליך';
   renderPills();
   startAuto();
+  document.addEventListener('pc:motion', function(e){ if (e.detail.off) pauseAuto(); else resumeAuto(); });
 })();
 </script>
+<script src="a11y.js" defer></script>
 </body>
 </html>
