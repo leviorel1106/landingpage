@@ -28,3 +28,6 @@ oreldogtrainer.html
 senthera.html
 senthera-landing-new.html
 leash-training.html
+
+# Dev guard script (local only)
+check-css.mjs
