@@ -9,6 +9,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="a11y.css">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2182036655575688');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
   <style>
     /* ─── Variables ──────────────────────────────────────────── */
     :root {
@@ -1197,6 +1211,8 @@
   </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=2182036655575688&ev=PageView&noscript=1"></noscript>
 
 <a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 
@@ -1892,6 +1908,18 @@
         </select>
         <span class="f-field-err" id="err-dog">נא לבחור סוג כלב</span>
       </div>
+      <div class="f-field" id="field-city">
+        <label class="f-label" for="f-city">עיר מגורים <span class="f-req" aria-hidden="true">*</span></label>
+        <select id="f-city" name="city" required aria-required="true" aria-describedby="err-city city-hint">
+          <option value="" disabled selected>בחרו עיר</option>
+          <option value="tel-aviv">תל אביב-יפו</option>
+          <option value="ramat-gan">רמת גן</option>
+          <option value="givatayim">גבעתיים</option>
+          <option value="other">עיר אחרת</option>
+        </select>
+        <span class="f-field-err" id="err-city">נא לבחור עיר מגורים</span>
+        <span class="f-hint" id="city-hint" hidden>אימון עד הבית ניתן בתל אביב, רמת גן וגבעתיים. גם מחוץ לאזור אפשר להצטרף למסלול SOLO — השאירו פרטים ונחזור אליכם לבדוק התאמה.</span>
+      </div>
 
       <div class="f-consents">
         <div class="f-field" id="field-privacy">
@@ -2099,10 +2127,10 @@
   const WEBHOOK = 'https://hook.us2.make.com/1008gef18vuksep1csa1ekq1thbdpfua';
   // Bump this whenever the consent wording changes, so a stored consent can be
   // tied back to the exact text the person agreed to.
-  const CONSENT_VERSION = '2026-08-09';
+  const CONSENT_VERSION = '2026-08-11';
 
   const form   = document.getElementById('contact-form');
-  const formEl = { name: 'f-name', phone: 'f-phone', dog: 'f-dog', privacy: 'f-privacy' };
+  const formEl = { name: 'f-name', phone: 'f-phone', dog: 'f-dog', city: 'f-city', privacy: 'f-privacy' };
 
   function setFieldError(inputId, on) {
     const input = document.getElementById(inputId);
@@ -2116,24 +2144,54 @@
     const name    = document.getElementById('f-name');
     const phone   = document.getElementById('f-phone');
     const dog     = document.getElementById('f-dog');
+    const city    = document.getElementById('f-city');
     const privacy = document.getElementById('f-privacy');
 
     const nameOk    = name.value.trim().length >= 2;
     const phoneOk   = /^[0-9+\-\s()]{9,15}$/.test(phone.value.trim());
     const dogOk     = !!dog.value;
+    const cityOk    = !!city.value;
     const privacyOk = privacy.checked;
 
     setFieldError('f-name', !nameOk);       if (!nameOk)    bad.push(name);
     setFieldError('f-phone', !phoneOk);     if (!phoneOk)   bad.push(phone);
     setFieldError('f-dog', !dogOk);         if (!dogOk)     bad.push(dog);
+    setFieldError('f-city', !cityOk);       if (!cityOk)    bad.push(city);
     setFieldError('f-privacy', !privacyOk); if (!privacyOk) bad.push(privacy);
     return bad;
   }
 
-  [formEl.name, formEl.phone, formEl.dog, formEl.privacy].forEach(id => {
+  [formEl.name, formEl.phone, formEl.dog, formEl.city, formEl.privacy].forEach(id => {
     const el = document.getElementById(id);
     el.addEventListener('change', () => { if (el.closest('.f-field').classList.contains('has-error')) validate(); });
   });
+
+  // The service area. Someone outside it can still submit — the SOLO track is
+  // sold to them explicitly — but their submission is not reported to Meta as a
+  // Lead, so the campaign optimises only on people we can actually serve.
+  const IN_AREA = ['tel-aviv', 'ramat-gan', 'givatayim'];
+  const PIXEL_ID = '2182036655575688';
+
+  const cityEl = document.getElementById('f-city');
+  const cityHint = document.getElementById('city-hint');
+  cityEl.addEventListener('change', () => { cityHint.hidden = cityEl.value !== 'other'; });
+
+  function fireQualifiedLead(phone, name) {
+    if (typeof fbq !== 'function') return;
+    // Advanced Matching. The form has no email, so phone + first name + city
+    // are what we can offer. Meta hashes these in the browser (SHA-256).
+    const digits = phone.replace(/\D/g, '');
+    fbq('init', PIXEL_ID, {
+      ph: digits.replace(/^0/, '972'),
+      fn: name.trim().split(/\s+/)[0].toLowerCase(),
+      ct: cityEl.value.replace(/-/g, '')
+    });
+    fbq('track', 'Lead', {
+      content_name: 'poodle-home-training-lead',
+      value: 50,
+      currency: 'ILS'
+    });
+  }
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -2160,6 +2218,7 @@
           name:     document.getElementById('f-name').value.trim(),
           phone:    document.getElementById('f-phone').value.trim(),
           dog_type: document.getElementById('f-dog').value,
+          city:     document.getElementById('f-city').value,
           source:   'poodle_club',
           ts:       new Date().toISOString(),
           // consent record — needed to prove what was agreed and when
@@ -2169,6 +2228,11 @@
           consent_ts:        new Date().toISOString()
         }) });
       if (!r.ok) throw new Error();
+      // qualified leads only: past validation, past the honeypot, server said 200
+      if (IN_AREA.includes(document.getElementById('f-city').value)) {
+        fireQualifiedLead(document.getElementById('f-phone').value,
+                          document.getElementById('f-name').value);
+      }
       form.innerHTML = '<div class="f-success" role="status" tabindex="-1" id="f-done">' +
         '<div style="font-size:2.5rem;margin-bottom:14px" aria-hidden="true">\uD83D\uDC29</div>' +
         '<h3>תודה! קיבלנו את הפרטים</h3>' +
@@ -2438,5 +2502,6 @@
 </script>
 
 <script src="a11y.js" defer></script>
+<script src="cookie-notice.js" defer></script>
 </body>
 </html>
